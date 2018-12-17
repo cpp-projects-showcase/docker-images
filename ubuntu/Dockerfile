@@ -24,7 +24,7 @@ RUN apt-get -y install less htop net-tools wget curl screen git-all \
 	libzmqpp-dev libboost-dev libxapian-dev libssl-dev libffi-dev \
 	swig graphviz \
 	libmpich-dev libopenmpi-dev \
-	libreadline-dev libsqlite3-dev libmariadb-devel libsoci-dev \
+	libreadline-dev libsqlite3-dev libmariadb-dev libsoci-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python python-pip libpython-dev \
 	python3 python3-pip libpython3-dev \
