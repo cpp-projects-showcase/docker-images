@@ -10,7 +10,7 @@ for C++ and Python developers. Both programming languages are related
 as Python is built on top of C++ (e.g., a few Python modules needs
 to be compiled with C++).
 
-The Linux distribution is CentOS 7 for now. Ubuntu may follow next.
+The supported Linux distributions are CentOS 7, Ubuntu 18.10 and Debian 9.
 
 Every time some changes are committed on the [project's GitHub
 repository](https://github.com/cpp-projects-showcase/docker-images),
@@ -31,14 +31,14 @@ Docker Cloud then rebuilds the corresponding Docker imagez, which become
 available for every one to use.
 
 # Images on Docker Cloud
-* Docker Cloud dashboard: https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base
+* [Docker Cloud dashboard](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base)
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos` or `ubuntu`):
+  (`<linux-distrib>` may be one of `centos`, `ubuntu` or `debian`):
 ```bash
-$ docker pull cpppythondevelopment/<linux-distrib>:latest
-$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/<linux-distrib>:latest
+$ docker pull cpppythondevelopment/base:<linux-distrib>
+$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
 [build@5..0 dev]$ 
 ```
 
@@ -90,7 +90,7 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos` or `ubuntu`:
+`<linux-distrib>` may be one of `centos`, `ubuntu` or `debian`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev
@@ -105,8 +105,7 @@ $ docker push cpppythondevelopment/<linux-distrib>:beta
 
 # TODO
 For any of the following features, an issue may be open [on GitHub](https://github.com/cpp-projects-showcase/docker-images/issues):
-1. Support other Linux distributions, for instance Fedora, Debian (e.g.,
-   `fedora`, `debian`)
+1. Support other Linux distributions, for instance Fedora (e.g., `fedora`)
 2. Automate regular rebuilds (e.g., once a month for CentOS or Ubuntu)
 
 
