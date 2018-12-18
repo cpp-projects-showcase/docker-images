@@ -6,16 +6,19 @@ MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.1"
 
 # Environment
-ENV container docker
-ENV HOME /home/build
-ENV LANG en_US.UTF-8
-ENV LC_ALL ${LANG}
+ENV container "docker"
+ENV HOME "/home/build"
+ENV LANG "en_US.UTF-8"
+ENV LC_ALL "${LANG}"
 
 # Update the system
-RUN apt-get update && apt-get -y upgrade
+RUN apt-get update && apt-get -y install apt-utils && apt-get -y upgrade
+
+# Generate the locales
+RUN locale-gen
 
 # Basic, C++ and Python packages
-RUN apt-get -y install less htop net-tools wget curl screen git-all \
+RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
 	bash-completion vim-nox emacs-nox apt-utils keyutils \
 	zlib1g-dev libbz2-dev gzip tar unzip \
 	lsb-release libgmp-dev \
