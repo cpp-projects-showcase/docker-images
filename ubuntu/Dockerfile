@@ -6,16 +6,20 @@ MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.1"
 
 # Environment
-ENV container "docker"
-ENV HOME "/home/build"
-ENV LANG "en_US.UTF-8"
-ENV LC_ALL "${LANG}"
+ENV container docker
+ENV HOME /home/build
+ENV LANGUAGE en_US:en
+ENV LANG en_US.UTF-8
+ENV LC_ALL $LANG
 
 # Update the system
-RUN apt-get update && apt-get -y install apt-utils && apt-get -y upgrade
+RUN apt-get update && apt-get -y install locales apt-utils && apt-get -y upgrade
 
 # Generate the locales
-RUN locale-gen
+RUN locale-gen $LANG
+
+# Configure the time-zone
+RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
 RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
@@ -58,8 +62,8 @@ WORKDIR $HOME
 USER build
 
 # Python Pyenv and pipenv
-RUN git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv
-RUN source ${HOME}/.bashrc && pyenv install 3.7.1
+RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1
 RUN pip3 install --user -U pipenv
 
 # Entry point
