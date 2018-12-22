@@ -27,7 +27,7 @@ RUN yum -y install less htop net-tools which sudo man vim \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
 	gcc gcc-c++ cmake cmake3 m4 \
 	lcov cppunit-devel \
-	zeromq-devel czmq-devel \
+	zeromq-devel czmq-devel cppzmq-devel \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mariadb-devel \
