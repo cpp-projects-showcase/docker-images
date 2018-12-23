@@ -27,7 +27,7 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
 	bash-completion vim-nox emacs-nox apt-utils keyutils \
 	zlib1g-dev libbz2-dev gzip tar unzip \
 	lsb-release libgmp-dev \
-	gcc g++ cmake cmake-extras extra-cmake-modules \
+	gcc g++ cmake \
 	m4 autoconf libtool build-essential cppcheck clang \
 	flex bison \
 	libboost-all-dev libxapian-dev \
