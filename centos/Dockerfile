@@ -37,7 +37,8 @@ RUN yum -y install less htop net-tools which sudo man vim \
 	python34 python34-pip python34-devel \
 	python2-django mod_wsgi \
 	geos-devel geos-python \
-	doxygen ghostscript "tex(latex)" texlive-epstopdf-bin
+	doxygen ghostscript "tex(latex)" texlive-epstopdf-bin \
+	rake rubygem-rake
 RUN pip3 install -U pip pipenv
 
 # Create the `build` user (for the development activities)
