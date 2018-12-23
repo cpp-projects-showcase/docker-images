@@ -19,28 +19,41 @@ RUN apt-get update && apt-get -y install locales apt-utils && apt-get -y upgrade
 RUN locale-gen $LANG
 
 # Configure the time-zone
-RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
+	dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
 RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
 	bash-completion vim-nox emacs-nox apt-utils keyutils \
 	zlib1g-dev libbz2-dev gzip tar unzip \
 	lsb-release libgmp-dev \
-	gcc g++ cmake m4 autoconf libtool build-essential cppcheck clang \
+	gcc g++ cmake cmake-extras extra-cmake-modules \
+	m4 autoconf libtool build-essential cppcheck clang \
 	flex bison \
-	libczmq-dev libzmq3-dev libboost-dev libxapian-dev libssl-dev libffi-dev \
+	libboost-all-dev libxapian-dev \
+	libreadline-dev libczmq-dev libzmq3-dev libssl-dev libffi-dev \
 	swig graphviz \
 	libmpich-dev libopenmpi-dev \
-	libreadline-dev libsqlite3-dev libmariadb-dev libsoci-dev \
+	libsqlite3-dev libmariadb-dev libmysql++-dev postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python python-pip libpython-dev \
 	python3 python3-pip libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \
 	libgeos++-dev \
-	doxygen ghostscript texlive-latex-recommended
+	doxygen ghostscript texlive-latex-recommended \
+	rake
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# SOCI (as of December 2018, SOCI v4.0 has still not been released)
+RUN mkdir -p /opt/soci
+ADD resources/soci-debian-cmake.patch /opt/soci/soci-debian-cmake.patch
+RUN git clone https://github.com/SOCI/soci.git /opt/soci/socigit && \
+	cd /opt/soci/socigit && patch -p1 < ../soci-debian-cmake.patch && \
+	mkdir -p build && cd build && \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DSOCI_CXX_C11=ON -DSOCI_TESTS=OFF .. && \
+	make install
 
 # Create the `build` user (for the development activities)
 RUN adduser build
