@@ -23,7 +23,8 @@ RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
 	dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
+RUN apt-get -y update && \
+    apt-get -y install sudo less htop net-tools wget curl screen git-all \
 	bash-completion vim-nox emacs-nox apt-utils keyutils \
 	zlib1g-dev libbz2-dev gzip tar unzip \
 	lsb-release libgmp-dev \
@@ -32,8 +33,8 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libzmqpp-dev libssl-dev libffi-dev \
-	swig graphviz \
-	libmpich-dev libopenmpi-dev \
+	swig graphviz && \
+    apt-get -y install libmpich-dev libopenmpi-dev \
 	libsqlite3-dev libmariadb-dev libmysql++-dev postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python python-pip libpython-dev \
