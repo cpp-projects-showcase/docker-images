@@ -31,7 +31,8 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
 	m4 autoconf libtool build-essential cppcheck clang \
 	flex bison \
 	libboost-all-dev libxapian-dev \
-	libreadline-dev libczmq-dev libzmq3-dev libssl-dev libffi-dev \
+	libreadline-dev libncurses5-dev \
+	libczmq-dev libzmq3-dev libssl-dev libffi-dev \
 	swig graphviz \
 	libmpich-dev libopenmpi-dev \
 	libsqlite3-dev libmariadb-dev libmysql++-dev postgresql-server-dev-all \
