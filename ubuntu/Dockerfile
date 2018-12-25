@@ -32,7 +32,8 @@ RUN apt-get -y update && \
 	m4 autoconf libtool build-essential cppcheck clang \
 	flex bison \
 	libboost-all-dev libxapian-dev \
-	libreadline-dev libzmqpp-dev libssl-dev libffi-dev \
+	libreadline-dev libncurses5-dev \
+	libzmqpp-dev libssl-dev libffi-dev \
 	swig graphviz && \
     apt-get -y install libmpich-dev libopenmpi-dev \
 	libsqlite3-dev libmariadb-dev libmysql++-dev postgresql-server-dev-all \
@@ -48,9 +49,11 @@ RUN apt-get -y update && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # SOCI (as of December 2018, SOCI v4.0 has still not been released)
-RUN mkdir -p /opt/soci && \
-	git clone https://github.com/SOCI/soci.git /opt/soci/socigit && \
-	mkdir -p /opt/soci/socigit/build && cd /opt/soci/socigit/build && \
+RUN mkdir -p /opt/soci
+ADD resources/soci-debian-cmake.patch /opt/soci/soci-debian-cmake.patch
+RUN git clone https://github.com/SOCI/soci.git /opt/soci/socigit && \
+	cd /opt/soci/socigit && patch -p1 < ../soci-debian-cmake.patch && \
+	mkdir -p build && cd build && \
 	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DSOCI_CXX_C11=ON -DSOCI_TESTS=OFF .. && \
 	make install
 
