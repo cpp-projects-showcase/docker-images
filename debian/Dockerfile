@@ -79,7 +79,7 @@ USER build
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1
 RUN PATH=$HOME/.pyenv/bin:$PATH pyenv global 3.7.1
-RUN PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims/pip:$PATH pip install -U pipenv
+RUN PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH pip install -U pipenv
 
 # Entry point
 CMD ["/bin/bash"]
