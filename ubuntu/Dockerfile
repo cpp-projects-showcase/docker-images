@@ -36,7 +36,8 @@ RUN apt-get -y update && \
 	libzmqpp-dev libssl-dev libffi-dev \
 	swig graphviz && \
     apt-get -y install libmpich-dev libopenmpi-dev \
-	libsqlite3-dev libmariadb-dev libmysql++-dev postgresql-server-dev-all \
+	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
+	postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python libpython-dev python3 libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \
@@ -77,8 +78,9 @@ USER build
 
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
-RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1; pyenv global 3.7.1
-RUN PATH=$HOME/.pyenv/bin:$PATH pip install -U pipenv
+RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1
+RUN PATH=$HOME/.pyenv/bin:$PATH pyenv global 3.7.1
+RUN PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims/pip:$PATH pip install -U pipenv
 
 # Entry point
 CMD ["/bin/bash"]
