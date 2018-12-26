@@ -38,8 +38,7 @@ RUN apt-get -y update && \
     apt-get -y install libmpich-dev libopenmpi-dev \
 	libsqlite3-dev libmariadb-dev libmysql++-dev postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
-	python python-pip libpython-dev \
-	python3 python3-pip libpython3-dev \
+	python libpython-dev python3 libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
@@ -78,8 +77,8 @@ USER build
 
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
-RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1
-RUN pip3 install --user -U pipenv
+RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1 && pyenv global 3.7.1
+RUN PATH=$HOME/.pyenv/bin:$PATH pip install -U pipenv
 
 # Entry point
 CMD ["/bin/bash"]
