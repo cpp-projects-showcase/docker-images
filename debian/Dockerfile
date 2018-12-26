@@ -76,7 +76,7 @@ USER build
 
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
-RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1 && pyenv global 3.7.1
+RUN PATH=$HOME/.pyenv/bin:$PATH pyenv install 3.7.1; pyenv global 3.7.1
 RUN PATH=$HOME/.pyenv/bin:$PATH pip install -U pipenv
 
 # Entry point
