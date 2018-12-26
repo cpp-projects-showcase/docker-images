@@ -23,11 +23,11 @@ RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
 	dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -y install sudo less htop net-tools wget curl screen git-all \
-	bash-completion vim-nox emacs-nox apt-utils keyutils \
+RUN apt-get -y install sudo less htop net-tools wget curl screen git-all keychain gawk \
+	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
 	zlib1g-dev libbz2-dev gzip tar unzip \
 	lsb-release libgmp-dev \
-	gcc g++ cmake \
+	gcc g++ cmake manpages \
 	m4 autoconf libtool build-essential cppcheck clang \
 	flex bison \
 	libboost-all-dev libxapian-dev \
