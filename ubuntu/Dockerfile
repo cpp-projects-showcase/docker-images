@@ -58,7 +58,7 @@ RUN git clone https://github.com/SOCI/soci.git /opt/soci/socigit && \
 	make install
 
 # Create the `build` user (for the development activities)
-RUN adduser build
+RUN adduser --disabled-password --gecos "" build
 RUN echo "build ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/build && \
     chmod 0440 /etc/sudoers.d/build
 
@@ -75,6 +75,9 @@ RUN chown -R build.build $HOME
 # Switch to the 'build' user
 WORKDIR $HOME
 USER build
+
+# Git prompt
+RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
