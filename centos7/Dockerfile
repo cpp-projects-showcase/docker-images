@@ -1,5 +1,5 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/centos
+# http://github.com/cpp-projects-showcase/docker-images/tree/master/centos7
 #
 FROM docker.io/centos:7
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>

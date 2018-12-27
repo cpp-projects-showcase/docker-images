@@ -1,7 +1,7 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/debian9
+# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1804
 #
-FROM docker.io/debian:9
+FROM docker.io/ubuntu:18.04
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.1"
 
@@ -23,7 +23,8 @@ RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
 	dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -y install sudo less htop net-tools wget curl screen git-all keychain gawk \
+RUN apt-get -y update && \
+    apt-get -y install sudo less htop net-tools wget curl screen git-all keychain gawk \
 	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
 	zlib1g-dev libbz2-dev gzip tar unzip \
 	lsb-release libgmp-dev \
@@ -32,9 +33,9 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git-all keychai
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
-	libczmq-dev libzmq3-dev libssl-dev libffi-dev \
-	swig graphviz \
-	libmpich-dev libopenmpi-dev \
+	libzmqpp-dev libssl-dev libffi-dev \
+	swig graphviz && \
+    apt-get -y install libmpich-dev libopenmpi-dev \
 	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
 	postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \

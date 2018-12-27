@@ -1,5 +1,5 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu
+# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1810
 #
 FROM docker.io/ubuntu:18.10
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
