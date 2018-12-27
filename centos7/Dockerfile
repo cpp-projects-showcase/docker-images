@@ -3,12 +3,14 @@
 #
 FROM docker.io/centos:7
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
+LABEL version="0.1"
 
 # Docker build time environment variables
 ENV container docker
 ENV HOME /home/build
+ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
-ENV LC_ALL ${LANG}
+ENV LC_ALL $LANG
 
 # Import the Centos-7 GPG key to prevent warnings
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7

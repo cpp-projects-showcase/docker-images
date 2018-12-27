@@ -7,10 +7,15 @@ produces Docker images, hosted on [dedicated
 public Docker Cloud site](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base).
 Those Docker images are intended to bring Linux-based ready-to-use environment
 for C++ and Python developers. Both programming languages are related
-as Python is built on top of C++ (e.g., a few Python modules needs
+as Python is built on top of C++ (_e.g._, a few Python modules needs
 to be compiled with C++).
 
-The supported Linux distributions are CentOS 7, Ubuntu 18.10 and Debian 9.
+The supported Linux distributions are
+[CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
+[Ubuntu 18.10 (Cosmic Cuttlefish)](http://releases.ubuntu.com/18.10/)
+and [Debian 9 (Stretch)](https://www.debian.org/releases/stretch/).
+[Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/)
+may be supported next.
 
 Every time some changes are committed on the [project's GitHub
 repository](https://github.com/cpp-projects-showcase/docker-images),
@@ -24,10 +29,10 @@ those extra components.
 The preferred way to propose amendment of the Docker image is through
 [pull requests on the GitHub
 project](https://github.com/cpp-projects-showcase/docker-images/pulls).
-Once the pull request has been merged, i.e., once the `Dockerfile` amendment
+Once the pull request has been merged, _i.e._, once the `Dockerfile` amendment
 has been [committed in
 GitHub](https://github.com/cpp-projects-showcase/docker-images/commits/master),
-Docker Cloud then rebuilds the corresponding Docker imagez, which become
+Docker Cloud then rebuilds the corresponding Docker images, which become
 available for every one to use.
 
 # Images on Docker Cloud
@@ -35,7 +40,7 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos`, `ubuntu` or `debian`):
+  (`<linux-distrib>` may be one of `centos7`, `ubuntu1810` or `debian9`):
 ```bash
 $ docker pull cpppythondevelopment/base:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
@@ -43,8 +48,9 @@ $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:
 ```
 
 * Setup the user names and email addresses as environment variables for
-  subsequent settings. They should match as much as possible with
-  [Pagure, the Fedora Git repository](https://src.fedoraproject.org/settings#nav-email-tab):
+  subsequent settings. If you intend to contribute to Fedora/CentOS/RedHat
+  packaging, they should match as much as possible with
+  [Pagure, the Fedora Git repository](https://src.fedoraproject.org/settings#nav-email-tab)(otherwise, just ignore the RPM packaging part):
 ```bash
 [build@5..0 dev]$ export FULLNAME="Firstname Lastname"
 [build@5..0 dev]$ export EMAIL="email@example.com"
@@ -62,8 +68,8 @@ $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:
 [build@5..0 dev]$ sed -i -e "s/email@example.com/$EMAIL/g" ~/.rpmmacros
 ```
 
-* Clone some C++-based project (eg, [OpenTREP](http://github.com/trep/opentrep)
-  is used as an example here):
+* Clone some C++-based project (_e.g._,
+  [OpenTREP](http://github.com/trep/opentrep) is used as an example here):
 ```bash
 [build@5..0 dev]$ git clone https://github.com/trep/opentrep.git
 Cloning into 'opentrep'...
@@ -90,22 +96,24 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos`, `ubuntu` or `debian`:
+`<linux-distrib>` may be one of `centos7`, `ubuntu1810` or `debian9`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev
 $ git clone https://github.com/cpp-projects-showcase/docker-images.git cpp-docker-images
-$ cd cpp-docker-images/<linux-distrib>
-$ vi Dockerfile
+$ cd cpp-docker-images
+$ vi <linux-distrib>/Dockerfile
 $ docker build -t cpppythondevelopment/<linux-distrib>:beta --squash <linux-distrib>/
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/<linux-distrib>:beta
-[build@9..d dev]$ exit
+[build@9..d cpp-projects-showcase]$ exit
 $ docker push cpppythondevelopment/<linux-distrib>:beta
 ```
 
 # TODO
-For any of the following features, an issue may be open [on GitHub](https://github.com/cpp-projects-showcase/docker-images/issues):
-1. Support other Linux distributions, for instance Fedora (e.g., `fedora`)
-2. Automate regular rebuilds (e.g., once a month for CentOS or Ubuntu)
+For any of the following features, an issue may be open
+[on GitHub](https://github.com/cpp-projects-showcase/docker-images/issues):
+1. Support other Linux distributions, for instance Ubuntu 18.04 LTS
+   or Fedora (_e.g._, `fedora`)
+2. Automate regular rebuilds (_e.g._, once a month for CentOS or Ubuntu)
 
 
