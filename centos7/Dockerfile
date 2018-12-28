@@ -29,19 +29,19 @@ RUN yum -y install less htop net-tools which sudo man vim \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
 	gcc gcc-c++ cmake cmake3 m4 \
 	lcov cppunit-devel \
-	zeromq-devel czmq-devel cppzmq-devel \
+	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mariadb-devel \
 	soci-mysql-devel soci-sqlite3-devel \
 	libicu-devel protobuf-devel protobuf-compiler \
-	python-devel \
-	python34 python34-pip python34-devel \
+	python-devel python34 python34-devel \
 	python2-django mod_wsgi \
 	geos-devel geos-python \
-	doxygen ghostscript "tex(latex)" texlive-epstopdf-bin \
+	graphviz ghostscript \
+	doxygen "tex(latex)" texlive-epstopdf-bin \
+	R-devel \
 	rake rubygem-rake
-RUN pip3 install -U pip pipenv
 
 # Create the `build` user (for the development activities)
 RUN adduser build
@@ -62,10 +62,14 @@ RUN chown -R build.build $HOME
 WORKDIR $HOME
 USER build
 
+# Git prompt
+RUN git clone https://github.com/magicmonty/bash-git-prompt.git $HOME/.bash-git-prompt --depth=1
+
 # Python Pyenv and pipenv
-RUN git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv
-RUN source ${HOME}/.bashrc && pyenv install 3.7.1
-RUN pip3 install --user -U pipenv
+RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
+RUN pyenv install 3.7.1 && pyenv global 3.7.1
+RUN pip install -U pipenv
 
 # Entry point
 CMD ["/bin/bash"]

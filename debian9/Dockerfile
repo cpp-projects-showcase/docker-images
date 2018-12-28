@@ -33,7 +33,7 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git keychain ga
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
 	libczmq-dev libzmq3-dev libssl-dev libffi-dev \
-	swig graphviz \
+	swig graphviz libopenblas-dev \
 	libmpich-dev libopenmpi-dev \
 	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
 	postgresql-server-dev-all \
@@ -42,6 +42,7 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git keychain ga
 	python3-django libapache2-mod-wsgi-py3 \
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
+	r-base r-base-dev \
 	rake
 
 # Cleaning

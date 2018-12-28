@@ -9,6 +9,7 @@ Those Docker images are intended to bring Linux-based ready-to-use environment
 for C++ and Python developers. Both programming languages are related
 as Python is built on top of C++ (_e.g._, a few Python modules needs
 to be compiled with C++).
+Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
