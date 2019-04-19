@@ -36,7 +36,7 @@ RUN apt-get -y update && \
 	libzmqpp-dev libssl-dev libffi-dev \
 	swig graphviz libopenblas-dev && \
     apt-get -y install libmpich-dev libopenmpi-dev \
-	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
+	sqlite3 libsqlite3-dev libmysql++-dev \
 	postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python libpython-dev python3 libpython3-dev \
