@@ -13,9 +13,12 @@ Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
-[Ubuntu 18.10 (Cosmic Cuttlefish)](http://releases.ubuntu.com/18.10/)
+[Ubuntu 18.10 (Cosmic Cuttlefish)](http://releases.ubuntu.com/18.10/),
+[Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
+[Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/)
 and [Debian 9 (Stretch)](https://www.debian.org/releases/stretch/).
-[Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/)
+[Debian 10 (buster; release expected around May 2019)](https://www.debian.org/releases/buster/)
+and [CentOS 8 (release expected end of 2019)](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8)
 may be supported next.
 
 Every time some changes are committed on the [project's GitHub
@@ -41,7 +44,8 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos7`, `ubuntu1810` or `debian9`):
+  (`<linux-distrib>` may be one of `centos7`, `ubuntu1810`, `ubuntu1804`,
+   `ubuntu1604` or `debian9`):
 ```bash
 $ docker pull cpppythondevelopment/base:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
@@ -97,7 +101,8 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos7`, `ubuntu1810` or `debian9`:
+`<linux-distrib>` may be one of `centos7`, `ubuntu1810`, `ubuntu1804`,
+`ubuntu1604` or `debian9`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev
@@ -113,7 +118,7 @@ $ docker push cpppythondevelopment/<linux-distrib>:beta
 # TODO
 For any of the following features, an issue may be open
 [on GitHub](https://github.com/cpp-projects-showcase/docker-images/issues):
-1. Support other Linux distributions, for instance Ubuntu 18.04 LTS
+1. Support other Linux distributions, for instance Ubuntu 14.04 LTS
    or Fedora (_e.g._, `fedora`)
 2. Automate regular rebuilds (_e.g._, once a month for CentOS or Ubuntu)
 

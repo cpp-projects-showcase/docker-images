@@ -37,7 +37,7 @@ RUN yum -y install less htop net-tools which sudo man vim \
 	libicu-devel protobuf-devel protobuf-compiler \
 	python-devel python34 python34-devel \
 	python2-django mod_wsgi \
-	geos-devel geos-python \
+	geos-devel \
 	graphviz ghostscript \
 	doxygen "tex(latex)" texlive-epstopdf-bin \
 	R-devel \
