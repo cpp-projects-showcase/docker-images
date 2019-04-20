@@ -35,7 +35,7 @@ RUN yum -y install less htop net-tools which sudo man vim \
 	readline-devel sqlite-devel mariadb-devel \
 	soci-mysql-devel soci-sqlite3-devel \
 	libicu-devel protobuf-devel protobuf-compiler \
-	python-devel python34 python34-devel \
+	python-devel python36 python36-devel \
 	python2-django mod_wsgi \
 	geos-devel \
 	graphviz ghostscript \
