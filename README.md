@@ -1,6 +1,8 @@
 Docker images to support development on C++ and Python stacks
 =============================================================
 
+[![Docker Repository on Quay](https://quay.io/repository/artificialintelligence/python-jupyter/status "Docker Repository on Quay")](https://quay.io/repository/artificialintelligence/python-jupyter)
+
 # Introduction
 [That project](https://github.com/cpp-projects-showcase/docker-images)
 produces Docker images, hosted on [dedicated
