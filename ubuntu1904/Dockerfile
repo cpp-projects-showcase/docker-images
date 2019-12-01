@@ -1,7 +1,7 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1810
+# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1904
 #
-FROM docker.io/ubuntu:18.10
+FROM docker.io/ubuntu:19.04
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.1"
 
@@ -83,8 +83,8 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-RUN pyenv install 3.7.2 && \
-    pyenv global 3.7.2 && \
+RUN pyenv install 3.7.5 && \
+    pyenv global 3.7.5 && \
     pip install -U pip && \
     pip install -U pipenv && \
     pyenv global system

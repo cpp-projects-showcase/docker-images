@@ -14,13 +14,16 @@ to be compiled with C++).
 Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
+[CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.1905),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
-[Ubuntu 18.10 (Cosmic Cuttlefish)](http://releases.ubuntu.com/18.10/),
+[Ubuntu 19.10 (Eoan Ermine)](http://releases.ubuntu.com/19.10/),
+[Ubuntu 19.04 (Disco Dingo)](http://releases.ubuntu.com/19.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
-[Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/)
+[Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/),
+[Debian 10 (Buster)](https://www.debian.org/releases/buster/)
 and [Debian 9 (Stretch)](https://www.debian.org/releases/stretch/).
-[Debian 10 (buster; release expected around May 2019)](https://www.debian.org/releases/buster/)
-and [CentOS 8 (release expected end of 2019)](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8)
+[Debian 11 (release expected around May 2020)](https://www.debian.org/releases)
+and [Ubuntu 20.04 (release expected April 2020)](http://releases.ubuntu.com/20.04/)
 may be supported next.
 
 Every time some changes are committed on the [project's GitHub
@@ -46,8 +49,8 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos7`, `ubuntu1810`, `ubuntu1804`,
-   `ubuntu1604` or `debian9`):
+  (`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu1910`,
+  `ubuntu1904`, `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`):
 ```bash
 $ docker pull cpppythondevelopment/base:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
@@ -92,19 +95,19 @@ Resolving deltas: 100% (3665/3665), done.
 
 * Do some development:
 ```bash
-[build@5..0 opentrep (trunk)]$ export INSTALL_BASEDIR=$HOME/dev/deliveries && export TREP_VER=99.99.99 && if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi && export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
+[build@5..0 opentrep (trunk)]$ export INSTALL_BASEDIR="${HOME}/dev/deliveries" && if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi && export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=${LIBSUFFIX}"
 [build@5..0 opentrep (trunk)]$ rm -rf build && mkdir build && cd build
-[build@5..0 build (trunk)]$ cmake3 -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/opentrep-$TREP_VER  -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=OFF -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
+[build@5..0 build (trunk)]$ cmake3 -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/opentrep-latest  -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=OFF -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 [build@5..0 build (trunk)]$ make install
-[build@5..0 build (trunk)]$ ./opentrep/opentrep-indexer
-[build@5..0 build (trunk)]$ ./opentrep/opentrep-searcher -q "nce sfo"
+[build@5..0 build (trunk)]$ ./opentrep/opentrep-indexer -t sqlite
+[build@5..0 build (trunk)]$ ./opentrep/opentrep-searcher -t sqlite -q "nce sfo"
 [build@5..0 build (trunk)]$ exit
 ```
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos7`, `ubuntu1810`, `ubuntu1804`,
-`ubuntu1604` or `debian9`:
+`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu1910`,
+`ubuntu1904`, `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev

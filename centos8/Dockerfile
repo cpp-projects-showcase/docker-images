@@ -1,7 +1,7 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/centos7
+# http://github.com/cpp-projects-showcase/docker-images/tree/master/centos8
 #
-FROM docker.io/centos:7
+FROM docker.io/centos:8
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.1"
 
@@ -12,31 +12,34 @@ ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 
-# Import the Centos-7 GPG key to prevent warnings
-RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
+# Import the Centos-8 GPG key to prevent warnings
+RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-Official
+
+# Add the repository for PowerTools
+RUN dnf -y install 'dnf-command(config-manager)'
+RUN dnf config-manager --set-enabled PowerTools
 
 # Update of CentOS
-RUN yum -y clean all && \
-    yum -y upgrade && \
-    yum -y install epel-release
+RUN dnf -y clean all && \
+    dnf -y upgrade && \
+    dnf -y install epel-release
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN yum -y install less htop net-tools which sudo man vim \
-	git-all wget curl file bash-completion keyutils Lmod \
+RUN dnf -y install less htop net-tools which sudo man vim \
+	git-all wget curl file bash-completion keyutils \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
-	gcc gcc-c++ cmake cmake3 m4 \
-	lcov cppunit-devel \
+	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
-	readline-devel sqlite-devel mariadb-devel \
+	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel \
 	libicu-devel protobuf-devel protobuf-compiler \
-	python-devel python36 python36-devel \
-	python2-django mod_wsgi \
+	python36 python36-devel \
+	python3-django mod_wsgi \
 	geos-devel \
 	graphviz ghostscript \
 	doxygen "tex(latex)" texlive-epstopdf-bin \

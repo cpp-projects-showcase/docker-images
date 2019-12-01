@@ -1,7 +1,7 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1804
+# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1910
 #
-FROM docker.io/ubuntu:18.04
+FROM docker.io/ubuntu:19.10
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.1"
 
