@@ -114,10 +114,10 @@ $ cd ~/dev
 $ git clone https://github.com/cpp-projects-showcase/docker-images.git cpp-docker-images
 $ cd cpp-docker-images
 $ vi <linux-distrib>/Dockerfile
-$ docker build -t cpppythondevelopment/<linux-distrib>:beta --squash <linux-distrib>/
-$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/<linux-distrib>:beta
+$ docker build -t cpppythondevelopment/base:<linux-distrib> <linux-distrib>/
+$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
 [build@9..d cpp-projects-showcase]$ exit
-$ docker push cpppythondevelopment/<linux-distrib>:beta
+$ docker push cpppythondevelopment/base:<linux-distrib>
 ```
 
 # TODO

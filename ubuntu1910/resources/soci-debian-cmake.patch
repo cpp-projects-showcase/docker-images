@@ -3,7 +3,7 @@ index 7798b45..861742f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -13,6 +13,8 @@
- cmake_minimum_required(VERSION 2.8.10 FATAL_ERROR)
+ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
  
  project(SOCI)
 +include(GNUInstallDirs)

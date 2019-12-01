@@ -11,32 +11,40 @@ ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
+ENV SOCI_VER 4.0.0
 
 # Update the system
-RUN apt-get update && apt-get -y install locales apt-utils && apt-get -y upgrade
+RUN echo "Europe/Paris" > /etc/timezone
+RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
+RUN apt-get -qq update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
+	apt-utils apt-transport-https \
+	ca-certificates locales tzdata sudo \
+	zip unzip gzip bzip2 xz-utils tar unrar p7zip-full \
+	curl wget netcat net-tools aptitude
 
 # Generate the locales
-RUN locale-gen $LANG
+RUN locale-gen $LANG && update-locale LANG=$LANG LANGUAGE=$LANGUAGE LC_ALL=$LC_ALL
 
 # Configure the time-zone
-RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
-	dpkg-reconfigure -f noninteractive tzdata
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -y update && \
-    apt-get -y install sudo less htop net-tools wget curl screen git keychain gawk \
+RUN apt-get -y install less htop screen \
+	git keychain gawk \
 	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
-	zlib1g-dev libbz2-dev gzip tar unzip \
+	zlib1g-dev libbz2-dev \
 	lsb-release libgmp-dev \
-	gcc g++ cmake manpages \
-	m4 autoconf libtool build-essential cppcheck clang \
+	gcc g++ cppcheck clang cmake manpages patch pkg-config \
+	m4 autoconf automake libtool libltdl-dev build-essential \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
 	libzmqpp-dev libssl-dev libffi-dev \
 	swig graphviz libopenblas-dev && \
     apt-get -y install libmpich-dev libopenmpi-dev \
-	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
+	sqlite3 libsqlite3-dev \
+	mysql-client libmysqlclient-dev libmysql++-dev \
 	postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python libpython-dev python3 libpython3-dev \
@@ -49,13 +57,16 @@ RUN apt-get -y update && \
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# SOCI (as of December 2018, SOCI v4.0 has still not been released)
+# SOCI
 RUN mkdir -p /opt/soci
 ADD resources/soci-debian-cmake.patch /opt/soci/soci-debian-cmake.patch
-RUN git clone https://github.com/SOCI/soci.git /opt/soci/socigit && \
-	cd /opt/soci/socigit && patch -p1 < ../soci-debian-cmake.patch && \
+RUN wget https://github.com/SOCI/soci/archive/$SOCI_VER.tar.gz \
+	  -O /opt/soci/soci-$SOCI_VER.tar.gz && cd /opt/soci && \
+	tar zxf soci-$SOCI_VER.tar.gz && rm -f soci-$SOCI_VER.tar.gz && \
+	cd soci-$SOCI_VER && patch -p1 < ../soci-debian-cmake.patch && \
 	mkdir -p build && cd build && \
-	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DSOCI_CXX_C11=ON -DSOCI_TESTS=OFF .. && \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
+	  -DSOCI_TESTS=OFF .. && \
 	make install
 
 # Create the `build` user (for the development activities)
@@ -85,8 +96,7 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN pyenv install 3.7.5 && \
     pyenv global 3.7.5 && \
-    pip install -U pip && \
-    pip install -U pipenv && \
+    pip install -U pip pipenv && \
     pyenv global system
 
 # Entry point

@@ -1,14 +1,14 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1904
+# http://github.com/cpp-projects-showcase/docker-images/tree/master/debian10
 #
-FROM docker.io/ubuntu:19.04
+FROM docker.io/debian:10
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.1"
 
 # Environment
 ENV container docker
 ENV HOME /home/build
-ENV LANGUAGE en_US.en
+ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 ENV SOCI_VER 4.0.0
@@ -96,8 +96,7 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN pyenv install 3.7.5 && \
     pyenv global 3.7.5 && \
-    pip install -U pip && \
-    pip install -U pipenv && \
+    pip install -U pip pipenv && \
     pyenv global system
 
 # Entry point
