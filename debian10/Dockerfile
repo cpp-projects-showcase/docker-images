@@ -20,7 +20,7 @@ RUN apt-get -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
 	apt-utils apt-transport-https \
 	ca-certificates locales tzdata sudo \
-	zip unzip gzip bzip2 xz-utils tar unrar p7zip-full \
+	zip unzip gzip bzip2 xz-utils tar p7zip-full \
 	curl wget netcat net-tools aptitude
 
 # Generate the locales

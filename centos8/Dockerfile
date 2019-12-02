@@ -74,7 +74,7 @@ ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN pyenv install 3.7.5 && \
     pyenv global 3.7.5 && \
     pip install -U pip pipenv && \
-    pyenv global system
+    pyenv global system || echo "We go on"
 
 # Entry point
 CMD ["/bin/bash"]
