@@ -10,6 +10,7 @@ ENV container docker
 ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
+ENV LANG4GEN en_US.utf8
 ENV LC_ALL $LANG
 ENV SOCI_VER 4.0.0
 
@@ -19,7 +20,7 @@ RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
 RUN apt-get -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
 	apt-utils apt-transport-https \
-	ca-certificates locales tzdata sudo \
+	ca-certificates locales locales-all tzdata sudo \
 	zip unzip gzip bzip2 xz-utils tar p7zip-full \
 	curl wget netcat net-tools aptitude
 
@@ -40,12 +41,12 @@ RUN apt-get -y install less htop screen \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
-	libzmqpp-dev libssl-dev libffi-dev \
+	libzmq5-dev libczmq-dev libssl-dev libffi-dev \
 	swig graphviz libopenblas-dev && \
     apt-get -y install libmpich-dev libopenmpi-dev \
 	sqlite3 libsqlite3-dev \
-	mysql-client libmysqlclient-dev libmysql++-dev \
-	postgresql-server-dev-all \
+	mariadb-client libmariadbclient-dev \
+	libpqxx-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python libpython-dev python3 libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \

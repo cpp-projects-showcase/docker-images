@@ -36,15 +36,15 @@ RUN dnf -y install less htop net-tools which sudo man vim \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mysql-devel \
-	soci-mysql-devel soci-sqlite3-devel \
-	libicu-devel protobuf-devel protobuf-compiler \
+	soci-mysql-devel soci-sqlite3-devel && \
+  dnf -y install libicu-devel protobuf-devel protobuf-compiler \
 	python36 python36-devel \
 	python3-django mod_wsgi \
 	geos-devel \
-	graphviz ghostscript \
-	doxygen "tex(latex)" texlive-epstopdf-bin \
+	graphviz ghostscript doxygen \
 	R-devel \
-	rake rubygem-rake
+	rake rubygem-rake && \
+  dnf -y install "tex(latex)" texlive-epstopdf-bin
 
 # Create the `build` user (for the development activities)
 RUN adduser build
