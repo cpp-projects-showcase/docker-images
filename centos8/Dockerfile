@@ -13,16 +13,19 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 
 # Import the Centos-8 GPG key to prevent warnings
-RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-Official
+RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-Official && \
+  rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
 
 # Add the repository for PowerTools
 RUN dnf -y install 'dnf-command(config-manager)'
 RUN dnf config-manager --set-enabled PowerTools
 
+# Add EPEL support
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
 # Update of CentOS
 RUN dnf -y clean all && \
-    dnf -y upgrade && \
-    dnf -y install epel-release
+    dnf -y upgrade
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
