@@ -94,10 +94,9 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-RUN pyenv install 3.7.5 && \
-    pyenv global 3.7.5 && \
-    pip install -U pip && \
-    pip install -U pipenv && \
+RUN pyenv install 3.7.6 && \
+    pyenv global 3.7.6 && \
+    pip install -U pip pipenv && \
     pyenv global system
 
 # Entry point
