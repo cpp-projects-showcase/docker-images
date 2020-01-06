@@ -67,6 +67,9 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git $HOME/.bash-git-
 
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+# To be removed as soon as the image builds again correctly
+RUN cd $HOME/.pyenv && git pull && cd -
+#
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN pyenv install 3.7.6 && \
     pyenv global 3.7.6 && \
