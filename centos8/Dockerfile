@@ -27,6 +27,9 @@ RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.n
 RUN dnf -y clean all && \
     dnf -y upgrade
 
+# Configure the locale
+RUN dnf -y install glibc-locale-source glibc-langpack-en && localedef -f UTF-8 -i en_US $LANG
+
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
 
