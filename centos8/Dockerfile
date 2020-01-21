@@ -77,10 +77,10 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git $HOME/.bash-git-
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-RUN pyenv install 3.7.6 && \
-    pyenv global 3.7.6 && \
-    pip install -U pip pipenv && \
-    pyenv global system || echo "We go on"
+RUN pyenv install 3.8.1 && \
+    pyenv global 3.8.1 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.1"
 
 # Entry point
 CMD ["/bin/bash"]
