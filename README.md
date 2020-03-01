@@ -44,6 +44,9 @@ GitHub](https://github.com/cpp-projects-showcase/docker-images/commits/master),
 Docker Cloud then rebuilds the corresponding Docker images, which become
 available for every one to use.
 
+## See also
+* [Management of Python-related Docker images](https://github.com/python-helpers/docker-image-management)
+
 # Images on Docker Cloud
 * [Docker Cloud dashboard](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base)
 
