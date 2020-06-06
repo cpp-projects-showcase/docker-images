@@ -12,7 +12,7 @@ ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LANG4GEN en_US.utf8
 ENV LC_ALL $LANG
-ENV SOCI_VER 4.0.0
+ENV SOCI_VER 4.0.1-alpha2
 
 # Update the system
 RUN echo "Europe/Paris" > /etc/timezone
@@ -67,7 +67,7 @@ RUN wget https://github.com/SOCI/soci/archive/$SOCI_VER.tar.gz \
 	cd soci-$SOCI_VER && patch -p1 < ../soci-debian-cmake.patch && \
 	mkdir -p build && cd build && \
 	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
-	  -DSOCI_TESTS=OFF .. && \
+	  -DSOCI_CXX11=ON -DSOCI_TESTS=OFF .. && \
 	make install
 
 # Create the `build` user (for the development activities)
@@ -95,16 +95,16 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.1
-RUN pyenv install 3.8.1 && \
-    pyenv global 3.8.1 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.1"
 # Python 3.8.2
 RUN pyenv install 3.8.2 && \
     pyenv global 3.8.2 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.2"
+# Python 3.8.3
+RUN pyenv install 3.8.3 && \
+    pyenv global 3.8.3 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.3"
 
 # Entry point
 CMD ["/bin/bash"]
