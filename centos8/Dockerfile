@@ -76,6 +76,12 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git $HOME/.bash-git-
 
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+
+# Hack to git update $HOME/.pyenv
+WORKDIR $HOME/.pyenv
+RUN git pull
+WORKDIR $HOME
+
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 # Python 3.8.2
 RUN pyenv install 3.8.2 && \
