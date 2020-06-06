@@ -47,7 +47,7 @@ RUN apt-get -y install less htop screen \
 	mysql-client libmysqlclient-dev libmysql++-dev \
 	postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
-	python libpython-dev python3 libpython3-dev \
+	python2 libpython2-dev python3 libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
