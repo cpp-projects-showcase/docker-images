@@ -81,6 +81,11 @@ RUN pyenv install 3.8.3 && \
     pyenv global 3.8.3 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.3"
+# Python 3.8.5
+RUN pyenv install 3.8.5 && \
+    pyenv global 3.8.5 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.5"
 
 # Entry point
 CMD ["/bin/bash"]

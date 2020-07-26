@@ -5,42 +5,39 @@ Docker images to support development on C++ and Python stacks
 
 # Introduction
 [That project](https://github.com/cpp-projects-showcase/docker-images)
-produces Docker images, hosted on [dedicated
-public Docker Cloud site](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base).
+produces Docker images, hosted on
+[dedicated public Docker Cloud site](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base).
 Those Docker images are intended to bring Linux-based ready-to-use environment
 for C++ and Python developers. Both programming languages are related
-as Python is built on top of C++ (_e.g._, a few Python modules needs
+as Python is built on top of C++ (_e.g._, a few Python modules need
 to be compiled with C++).
 Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
-[CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.1905),
+[CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
-[Ubuntu 19.10 (Eoan Ermine)](http://releases.ubuntu.com/19.10/),
-[Ubuntu 19.04 (Disco Dingo)](http://releases.ubuntu.com/19.04/),
+[Ubuntu 20.04 LTS (Focal Fossa)](http://releases.ubuntu.com/20.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
 [Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/),
 [Debian 10 (Buster)](https://www.debian.org/releases/buster/)
 and [Debian 9 (Stretch)](https://www.debian.org/releases/stretch/).
-[Debian 11 (release expected around May 2020)](https://www.debian.org/releases)
-and [Ubuntu 20.04 (release expected April 2020)](http://releases.ubuntu.com/20.04/)
+[Debian 11 (Bullseye, release expected around May 2021)](https://www.debian.org/releases)
 may be supported next.
 
-Every time some changes are committed on the [project's GitHub
-repository](https://github.com/cpp-projects-showcase/docker-images),
-the [Docker images are automatically
-rebuilt](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base/timeline)
+Every time some changes are committed on the
+[project's GitHub repository](https://github.com/cpp-projects-showcase/docker-images),
+the
+[Docker images are automatically rebuilt](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base/timeline)
 and pushed onto Docker Cloud.
 
 When some more components are needed, which may be of interest to other
 C++ and Python developers, the Docker image may be amended so as to add
 those extra components.
 The preferred way to propose amendment of the Docker image is through
-[pull requests on the GitHub
-project](https://github.com/cpp-projects-showcase/docker-images/pulls).
+[pull requests on the GitHub project](https://github.com/cpp-projects-showcase/docker-images/pulls).
 Once the pull request has been merged, _i.e._, once the `Dockerfile` amendment
-has been [committed in
-GitHub](https://github.com/cpp-projects-showcase/docker-images/commits/master),
+has been
+[committed in GitHub](https://github.com/cpp-projects-showcase/docker-images/commits/master),
 Docker Cloud then rebuilds the corresponding Docker images, which become
 available for every one to use.
 
@@ -52,8 +49,8 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu1910`,
-  `ubuntu1904`, `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`):
+  (`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu2004`,
+  `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`):
 ```bash
 $ docker pull cpppythondevelopment/base:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
@@ -109,8 +106,8 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu1910`,
-`ubuntu1904`, `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`:
+`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu2004`,
+`ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev
