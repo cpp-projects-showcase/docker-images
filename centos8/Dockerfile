@@ -44,8 +44,9 @@ RUN dnf -y install less htop net-tools which sudo man vim \
 	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel && \
   dnf -y install libicu-devel protobuf-devel protobuf-compiler \
-	python36 python36-devel \
-	python3-django mod_wsgi \
+	python36 python36-devel python3-mod_wsgi \
+	python3-django \
+	python38 python38-devel python38-mod_wsgi \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
