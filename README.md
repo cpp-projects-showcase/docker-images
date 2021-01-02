@@ -16,6 +16,7 @@ Some basic support for [R](http://r-project.org) is also provided.
 The supported Linux distributions are
 [CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
+[Fedora 33](https://docs.fedoraproject.org/en-US/fedora/f33/release-notes/index.html),
 [Ubuntu 20.04 LTS (Focal Fossa)](http://releases.ubuntu.com/20.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
 [Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/),
@@ -124,7 +125,6 @@ $ docker push cpppythondevelopment/base:<linux-distrib>
 For any of the following features, an issue may be open
 [on GitHub](https://github.com/cpp-projects-showcase/docker-images/issues):
 1. Support other Linux distributions, for instance Ubuntu 14.04 LTS
-   or Fedora (_e.g._, `fedora`)
 2. Automate regular rebuilds (_e.g._, once a month for CentOS or Ubuntu)
 
 
