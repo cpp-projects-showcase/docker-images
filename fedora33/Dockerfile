@@ -9,12 +9,12 @@ ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 
-# Update of Fedora
+# Update of Fedora and configure the locale
 RUN dnf -y clean all && \
-    dnf -y upgrade
-
-# Configure the locale
-RUN dnf -y install glibc-locale-source glibc-langpack-en && localedef -f UTF-8 -i en_US $LANG
+    dnf -y upgrade && \
+	dnf -y install glibc-locale-source glibc-langpack-en && \
+	dnf -y clean all && \
+	localedef -f UTF-8 -i en_US $LANG 
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
@@ -28,8 +28,8 @@ RUN dnf -y install less htop net-tools which sudo man vim \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mysql-devel \
-	soci-mysql-devel soci-sqlite3-devel
-RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
+	soci-mysql-devel soci-sqlite3-devel && \
+  dnf -y install libicu-devel protobuf-devel protobuf-compiler \
 	python36 \
 	python3-django python3-mod_wsgi \
 	python38 \
@@ -37,8 +37,9 @@ RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
-	rake # rubygem-rake
-RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
+	rake && \
+  dnf -y install "tex(latex)" texlive-epstopdf-bin && \
+  dnf -y clean all
 
 # Create the `build` user (for the development activities)
 RUN adduser build
