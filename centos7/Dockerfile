@@ -25,10 +25,11 @@ RUN yum -y clean all && \
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN yum -y install less htop net-tools which sudo man vim \
+RUN yum -y install dnf && \
+  dnf -y install less htop net-tools which sudo man vim \
 	git-all wget curl file bash-completion keyutils Lmod \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
-    autoconf automake libtool \
+        autoconf automake libtool \
 	gcc gcc-c++ cmake cmake3 m4 \
 	lcov cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
@@ -37,14 +38,14 @@ RUN yum -y install less htop net-tools which sudo man vim \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mariadb-devel \
 	soci-mysql-devel soci-sqlite3-devel && \
-  dnf -y install libicu-devel \
+  yum -y install libicu-devel \
 	protobuf-devel protobuf-compiler \
 	python36 python36-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
 	rake rubygem-rake && \
-  dnf -y install "tex(latex)" texlive-epstopdf-bin
+  yum -y install "tex(latex)" texlive-epstopdf-bin
 
 # Create the `build` user (for the development activities)
 RUN adduser build
