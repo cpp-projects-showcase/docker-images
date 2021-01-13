@@ -2,7 +2,8 @@
 # http://github.com/cpp-projects-showcase/docker-images/tree/master/centos8
 #
 FROM docker.io/centos:8
-MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
+
+LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
 
 # Docker build time environment variables
@@ -37,13 +38,16 @@ ADD resources/bashrc /root/.bashrc
 RUN dnf -y install less htop net-tools which sudo man vim \
 	git-all wget curl file bash-completion keyutils \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
-	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
+    autoconf automake libtool \
+	langtable gcc gcc-c++ cmake3 m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
-	boost-devel xapian-core-devel openssl-devel libffi-devel \
+	boost-devel boost169-devel boost169-python3-devel \
+	xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel && \
-  dnf -y install libicu-devel protobuf-devel protobuf-compiler \
+  dnf -y install libicu-devel \
+	protobuf-devel protobuf-compiler \
 	python36 python36-devel \
 	python3-django python3-mod_wsgi \
 	python38 python38-devel \
@@ -84,21 +88,21 @@ RUN git pull
 WORKDIR $HOME
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.5
-RUN pyenv install 3.8.5 && \
-    pyenv global 3.8.5 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.5"
 # Python 3.8.6
 RUN pyenv install 3.8.6 && \
     pyenv global 3.8.6 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.6"
-# Python 3.9.0
-RUN pyenv install 3.9.0 && \
-    pyenv global 3.9.0 && \
+# Python 3.8.7
+RUN pyenv install 3.8.7 && \
+    pyenv global 3.8.7 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.0"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.7"
+# Python 3.9.1
+RUN pyenv install 3.9.1 && \
+    pyenv global 3.9.1 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.1"
 
 # Entry point
 CMD ["/bin/bash"]

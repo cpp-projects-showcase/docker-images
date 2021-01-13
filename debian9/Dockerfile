@@ -2,7 +2,8 @@
 # http://github.com/cpp-projects-showcase/docker-images/tree/master/debian9
 #
 FROM docker.io/debian:9
-MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
+
+LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
 
 # Environment
@@ -39,7 +40,7 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git keychain ga
 	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
 	postgresql-server-dev-all \
 	libicu-dev libprotobuf-dev protobuf-compiler \
-	python libpython-dev python3 libpython3-dev \
+	python3 libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
@@ -86,21 +87,21 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.5
-RUN pyenv install 3.8.5 && \
-    pyenv global 3.8.5 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.5"
 # Python 3.8.6
 RUN pyenv install 3.8.6 && \
     pyenv global 3.8.6 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.6"
-# Python 3.9.0
-RUN pyenv install 3.9.0 && \
-    pyenv global 3.9.0 && \
+# Python 3.8.7
+RUN pyenv install 3.8.7 && \
+    pyenv global 3.8.7 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.0"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.7"
+# Python 3.9.1
+RUN pyenv install 3.9.1 && \
+    pyenv global 3.9.1 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.1"
 
 # Entry point
 CMD ["/bin/bash"]

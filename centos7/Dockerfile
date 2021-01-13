@@ -2,7 +2,8 @@
 # http://github.com/cpp-projects-showcase/docker-images/tree/master/centos7
 #
 FROM docker.io/centos:7
-MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
+
+LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
 
 # Docker build time environment variables
@@ -27,21 +28,23 @@ ADD resources/bashrc /root/.bashrc
 RUN yum -y install less htop net-tools which sudo man vim \
 	git-all wget curl file bash-completion keyutils Lmod \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
+    autoconf automake libtool \
 	gcc gcc-c++ cmake cmake3 m4 \
 	lcov cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
-	boost-devel xapian-core-devel openssl-devel libffi-devel \
+	boost-devel boost169-devel boost169-python3-devel \
+	xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mariadb-devel \
-	soci-mysql-devel soci-sqlite3-devel \
-	libicu-devel protobuf-devel protobuf-compiler \
-	python-devel python36 python36-devel \
-	python2-django mod_wsgi \
+	soci-mysql-devel soci-sqlite3-devel && \
+  dnf -y install libicu-devel \
+	protobuf-devel protobuf-compiler \
+	python36 python36-devel \
 	geos-devel \
-	graphviz ghostscript \
-	doxygen "tex(latex)" texlive-epstopdf-bin \
+	graphviz ghostscript doxygen \
 	R-devel \
-	rake rubygem-rake
+	rake rubygem-rake && \
+  dnf -y install "tex(latex)" texlive-epstopdf-bin
 
 # Create the `build` user (for the development activities)
 RUN adduser build
@@ -71,21 +74,21 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 RUN cd $HOME/.pyenv && git pull && cd -
 #
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.5
-RUN pyenv install 3.8.5 && \
-    pyenv global 3.8.5 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.5"
 # Python 3.8.6
 RUN pyenv install 3.8.6 && \
     pyenv global 3.8.6 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.6"
-# Python 3.9.0
-RUN pyenv install 3.9.0 && \
-    pyenv global 3.9.0 && \
+# Python 3.8.7
+RUN pyenv install 3.8.7 && \
+    pyenv global 3.8.7 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.0"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.7"
+# Python 3.9.1
+RUN pyenv install 3.9.1 && \
+    pyenv global 3.9.1 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.1"
 
 # Entry point
 CMD ["/bin/bash"]
