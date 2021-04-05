@@ -50,8 +50,8 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu2004`,
-  `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`):
+  (`<linux-distrib>` may be one of `centos8`, `centos7`, `fedora33`,
+  `ubuntu2004`, `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`):
 ```bash
 $ docker pull cpppythondevelopment/base:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
@@ -124,7 +124,6 @@ $ docker push cpppythondevelopment/base:<linux-distrib>
 # TODO
 For any of the following features, an issue may be open
 [on GitHub](https://github.com/cpp-projects-showcase/docker-images/issues):
-1. Support other Linux distributions, for instance Ubuntu 14.04 LTS
-2. Automate regular rebuilds (_e.g._, once a month for CentOS or Ubuntu)
+1. Automate regular rebuilds (_e.g._, once a month for CentOS or Ubuntu)
 
 

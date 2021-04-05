@@ -75,21 +75,21 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 RUN cd $HOME/.pyenv && git pull && cd -
 #
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.7
-RUN pyenv install 3.8.7 && \
-    pyenv global 3.8.7 && \
+# Python 3.8.9
+RUN pyenv install 3.8.9 && \
+    pyenv global 3.8.9 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.7"
-# Python 3.9.1
-RUN pyenv install 3.9.1 && \
-    pyenv global 3.9.1 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.1"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.9"
 # Python 3.9.2
 RUN pyenv install 3.9.2 && \
     pyenv global 3.9.2 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.2"
+# Python 3.9.4
+RUN pyenv install 3.9.4 && \
+    pyenv global 3.9.4 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.4"
 
 # Entry point
 CMD ["/bin/bash"]
