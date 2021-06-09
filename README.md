@@ -17,6 +17,7 @@ The supported Linux distributions are
 [CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
 [Fedora 33](https://docs.fedoraproject.org/en-US/fedora/f33/release-notes/index.html),
+[Fedora 34](https://docs.fedoraproject.org/en-US/fedora/f34/release-notes/index.html),
 [Ubuntu 20.04 LTS (Focal Fossa)](http://releases.ubuntu.com/20.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
 [Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/),
@@ -50,8 +51,9 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos8`, `centos7`, `fedora33`,
-  `ubuntu2004`, `ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`):
+  (`<linux-distrib>` may be one of `centos8`, `centos7`,
+  `fedora33`, `fedora34`, `debian10` or `debian9`,
+  `ubuntu2004`, `ubuntu1804`, `ubuntu1604`):
 ```bash
 $ docker pull cpppythondevelopment/base:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>

@@ -44,7 +44,8 @@ RUN yum -y install dnf && \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
-	rake rubygem-rake && \
+	rake rubygem-rake \
+	jq && \
   yum -y install "tex(latex)" texlive-epstopdf-bin
 
 # Create the `build` user (for the development activities)

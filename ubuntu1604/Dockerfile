@@ -46,7 +46,8 @@ RUN apt-get -y update && \
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
 	r-base r-base-dev \
-	rake
+	rake \
+	jq
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

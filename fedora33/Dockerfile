@@ -41,7 +41,8 @@ RUN dnf -y install less htop net-tools which sudo man vim \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
-	rubygem-rake && \
+	rubygem-rake \
+	jq && \
   dnf -y install "tex(latex)" texlive-epstopdf-bin && \
   dnf -y clean all
 

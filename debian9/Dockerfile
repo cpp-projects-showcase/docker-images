@@ -45,7 +45,8 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git keychain ga
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
 	r-base r-base-dev \
-	rake
+	rake \
+	jq
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
