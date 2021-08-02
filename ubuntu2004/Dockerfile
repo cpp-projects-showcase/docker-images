@@ -71,7 +71,7 @@ RUN curl -L -s \
 # SOCI
 RUN mkdir -p /opt/soci
 ADD resources/soci-debian-cmake.patch /opt/soci/soci-debian-cmake.patch
-RUN curl -L -s https://github.com/SOCI/soci/archive/$SOCI_VER.tar.gz \
+RUN curl -L -s https://github.com/SOCI/soci/archive/v$SOCI_VER.tar.gz \
 	  -o /opt/soci/soci-$SOCI_VER.tar.gz && cd /opt/soci && \
 	tar zxf soci-$SOCI_VER.tar.gz && rm -f soci-$SOCI_VER.tar.gz && \
 	cd soci-$SOCI_VER && patch -p1 < ../soci-debian-cmake.patch && \
