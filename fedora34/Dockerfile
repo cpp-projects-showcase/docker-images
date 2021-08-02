@@ -12,6 +12,8 @@ ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
+# Check https://github.com/mikefarah/yq/releases/latest for the latest releases
+ENV YQ_VERSION 4.11.2
 
 # Update of Fedora and configure the locale
 RUN dnf -y clean all && \
@@ -46,6 +48,12 @@ RUN dnf -y install less htop net-tools which sudo man vim \
   dnf -y install "tex(latex)" texlive-epstopdf-bin && \
   dnf -y clean all
 
+# yq, the YAML CLI utility like jq, but for YAML
+RUN curl -L -s \
+	  https://github.com/mikefarah/yq/releases/download/v$YQ_VERSION/yq_linux_amd64 \
+	  -o /usr/local/bin/yq && \
+	chmod 775 /usr/local/bin/yq
+
 # Create the `build` user (for the development activities)
 RUN adduser build
 RUN echo "build ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/build && \
@@ -75,21 +83,21 @@ ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 # Hack to git update $HOME/.pyenv
 #RUN cd $HOME/.pyenv && git pull && cd -
 
-# Python 3.8.10
-RUN pyenv install 3.8.10 && \
-    pyenv global 3.8.10 && \
+# Python 3.8.11
+RUN pyenv install 3.8.11 && \
+    pyenv global 3.8.11 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.10"
-# Python 3.9.4
-RUN pyenv install 3.9.4 && \
-    pyenv global 3.9.4 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.4"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.11"
 # Python 3.9.5
 RUN pyenv install 3.9.5 && \
     pyenv global 3.9.5 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.5"
+# Python 3.9.6
+RUN pyenv install 3.9.6 && \
+    pyenv global 3.9.6 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.6"
 
 # Entry point
 CMD ["/bin/bash"]

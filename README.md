@@ -1,35 +1,36 @@
-Docker images to support development on C++ and Python stacks
-=============================================================
+Container images to support development with C++ and Python
+===========================================================
 
-[![Docker Repository on Quay](https://quay.io/repository/cpppythondevelopment/base/status "Docker Repository on Quay")](https://quay.io/repository/cpppythondevelopment/base)
+[![Docker Cloud build status](https://img.shields.io/docker/cloud/build/infrahelpers/cpppython)](https://hub.docker.com/repository/docker/infrahelpers/cpppython/general)
+[![Container repository on Quay](https://quay.io/repository/cpppythondevelopment/base/status "Container repository on Quay")](https://quay.io/repository/cpppythondevelopment/base)
 
 # Introduction
 [That project](https://github.com/cpp-projects-showcase/docker-images)
-produces Docker images, hosted on
-[dedicated public Docker Cloud site](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base).
-Those Docker images are intended to bring Linux-based ready-to-use environment
-for C++ and Python developers. Both programming languages are related
-as Python is built on top of C++ (_e.g._, a few Python modules need
-to be compiled with C++).
+produces container (_e.g._, Docker) images, hosted on a
+[dedicated public Docker Cloud site](https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython).
+Those container images are intended to bring Linux-based ready-to-use
+environment for C++ and Python developers. Both programming languages
+are indeed related, as Python is built on top of C++ (_e.g._, a few Python
+modules need to be compiled with C++).
 Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
 [CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
-[Fedora 33](https://docs.fedoraproject.org/en-US/fedora/f33/release-notes/index.html),
 [Fedora 34](https://docs.fedoraproject.org/en-US/fedora/f34/release-notes/index.html),
+[Fedora 33](https://docs.fedoraproject.org/en-US/fedora/f33/release-notes/index.html),
 [Ubuntu 20.04 LTS (Focal Fossa)](http://releases.ubuntu.com/20.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
 [Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/),
 [Debian 10 (Buster)](https://www.debian.org/releases/buster/)
 and [Debian 9 (Stretch)](https://www.debian.org/releases/stretch/).
-[Debian 11 (Bullseye, release expected around May 2021)](https://www.debian.org/releases)
+[Debian 11 (Bullseye)](https://www.debian.org/releases)(release expected 14 August 2021)
 may be supported next.
 
 Every time some changes are committed on the
 [project's GitHub repository](https://github.com/cpp-projects-showcase/docker-images),
 the
-[Docker images are automatically rebuilt](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base/timeline)
+[container images are automatically rebuilt](https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython/timeline)
 and pushed onto Docker Cloud.
 
 When some more components are needed, which may be of interest to other
@@ -40,23 +41,23 @@ The preferred way to propose amendment of the Docker image is through
 Once the pull request has been merged, _i.e._, once the `Dockerfile` amendment
 has been
 [committed in GitHub](https://github.com/cpp-projects-showcase/docker-images/commits/master),
-Docker Cloud then rebuilds the corresponding Docker images, which become
+Docker Cloud then rebuilds the corresponding container images, which become
 available for every one to use.
 
 ## See also
 * [Management of Python-related Docker images](https://github.com/python-helpers/docker-image-management)
 
 # Images on Docker Cloud
-* [Docker Cloud dashboard](https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base)
+* [Docker Cloud dashboard](https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython)
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
   (`<linux-distrib>` may be one of `centos8`, `centos7`,
-  `fedora33`, `fedora34`, `debian10` or `debian9`,
+  `fedora34`, `fedora33`, `debian10` or `debian9`,
   `ubuntu2004`, `ubuntu1804`, `ubuntu1604`):
 ```bash
-$ docker pull cpppythondevelopment/base:<linux-distrib>
-$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
+$ docker pull infrahelpers/cpppython:<linux-distrib>
+$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it infrahelpers/cpppython:<linux-distrib>
 [build@5..0 dev]$ 
 ```
 
@@ -117,10 +118,10 @@ $ cd ~/dev
 $ git clone https://github.com/cpp-projects-showcase/docker-images.git cpp-docker-images
 $ cd cpp-docker-images
 $ vi <linux-distrib>/Dockerfile
-$ docker build -t cpppythondevelopment/base:<linux-distrib> <linux-distrib>/
-$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it cpppythondevelopment/base:<linux-distrib>
+$ docker build -t infrahelpers/cpppython:<linux-distrib> <linux-distrib>/
+$ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it infrahelpers/cpppython:<linux-distrib>
 [build@9..d cpp-projects-showcase]$ exit
-$ docker push cpppythondevelopment/base:<linux-distrib>
+$ docker push infrahelpers/cpppython:<linux-distrib>
 ```
 
 # TODO

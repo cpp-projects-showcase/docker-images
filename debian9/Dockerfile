@@ -12,7 +12,10 @@ ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
-ENV SOCI_VER 4.0.1-alpha2
+# Check https://github.com/SOCI/soci/releases for the latest releases
+ENV SOCI_VER 4.0.2
+# Check https://github.com/mikefarah/yq/releases/latest for the latest releases
+ENV YQ_VERSION 4.11.2
 
 # Update the system
 RUN apt-get update && apt-get -y install locales apt-utils && apt-get -y upgrade
@@ -51,11 +54,17 @@ RUN apt-get -y install sudo less htop net-tools wget curl screen git keychain ga
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# yq, the YAML CLI utility like jq, but for YAML
+RUN curl -L -s \
+	  https://github.com/mikefarah/yq/releases/download/v$YQ_VERSION/yq_linux_amd64 \
+	  -o /usr/local/bin/yq && \
+	chmod 775 /usr/local/bin/yq
+
 # SOCI (as of December 2018, SOCI v4.0 has still not been released)
 RUN mkdir -p /opt/soci
 ADD resources/soci-debian-cmake.patch /opt/soci/soci-debian-cmake.patch
-RUN wget https://github.com/SOCI/soci/archive/$SOCI_VER.tar.gz \
-	  -O /opt/soci/soci-$SOCI_VER.tar.gz && cd /opt/soci && \
+RUN curl -L -s https://github.com/SOCI/soci/archive/$SOCI_VER.tar.gz \
+	  -o /opt/soci/soci-$SOCI_VER.tar.gz && cd /opt/soci && \
 	tar zxf soci-$SOCI_VER.tar.gz && rm -f soci-$SOCI_VER.tar.gz && \
 	cd soci-$SOCI_VER && patch -p1 < ../soci-debian-cmake.patch && \
 	mkdir -p build && cd build && \
@@ -88,21 +97,21 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.10
-RUN pyenv install 3.8.10 && \
-    pyenv global 3.8.10 && \
+# Python 3.8.11
+RUN pyenv install 3.8.11 && \
+    pyenv global 3.8.11 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.10"
-# Python 3.9.4
-RUN pyenv install 3.9.4 && \
-    pyenv global 3.9.4 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.4"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.11"
 # Python 3.9.5
 RUN pyenv install 3.9.5 && \
     pyenv global 3.9.5 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.5"
+# Python 3.9.6
+RUN pyenv install 3.9.6 && \
+    pyenv global 3.9.6 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.6"
 
 # Entry point
 CMD ["/bin/bash"]
