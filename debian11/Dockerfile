@@ -50,7 +50,7 @@ RUN apt-get -y install less htop screen \
 	swig graphviz libopenblas-dev && \
     apt-get -y install libmpich-dev libopenmpi-dev \
 	sqlite3 libsqlite3-dev \
-	mariadb-client libmariadbclient-dev \
+	mariadb-client default-libmysqlclient-dev \
 	libpqxx-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python3 libpython3-dev \
