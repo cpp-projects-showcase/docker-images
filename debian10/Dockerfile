@@ -1,5 +1,6 @@
 #
-# http://github.com/cpp-projects-showcase/docker-images/tree/master/debian10
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/debian10
+# Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
 FROM docker.io/debian:10
 
@@ -13,10 +14,10 @@ ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LANG4GEN en_US.utf8
 ENV LC_ALL $LANG
-# Check https://github.com/SOCI/soci/releases for the latest releases
+# Check https://github.com/SOCI/soci/tags for the latest releases
 ENV SOCI_VER 4.0.2
 # Check https://github.com/mikefarah/yq/releases/latest for the latest releases
-ENV YQ_VERSION 4.11.2
+ENV YQ_VERSION 4.13.5
 
 # Update the system
 RUN echo "Europe/Paris" > /etc/timezone
@@ -107,21 +108,21 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.11
-RUN pyenv install 3.8.11 && \
-    pyenv global 3.8.11 && \
+# Python 3.8.12
+RUN pyenv install 3.8.12 && \
+    pyenv global 3.8.12 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.11"
-# Python 3.9.5
-RUN pyenv install 3.9.5 && \
-    pyenv global 3.9.5 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.12"
+# Python 3.9.7
+RUN pyenv install 3.9.7 && \
+    pyenv global 3.9.7 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.5"
-# Python 3.9.6
-RUN pyenv install 3.9.6 && \
-    pyenv global 3.9.6 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.7"
+# Python 3.10.0
+RUN pyenv install 3.10.0 && \
+    pyenv global 3.10.0 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.6"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.0"
 
 # Entry point
 CMD ["/bin/bash"]

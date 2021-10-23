@@ -1,8 +1,8 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1804
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/debian11
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/ubuntu:18.04
+FROM docker.io/debian:11
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -12,6 +12,7 @@ ENV container docker
 ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
+ENV LANG4GEN en_US.utf8
 ENV LC_ALL $LANG
 # Check https://github.com/SOCI/soci/tags for the latest releases
 ENV SOCI_VER 4.0.2
@@ -19,32 +20,38 @@ ENV SOCI_VER 4.0.2
 ENV YQ_VERSION 4.13.5
 
 # Update the system
-RUN apt-get update && apt-get -y install locales apt-utils && apt-get -y upgrade
+RUN echo "Europe/Paris" > /etc/timezone
+RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
+RUN apt-get -qq update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
+	apt-utils apt-transport-https \
+	ca-certificates locales locales-all tzdata sudo \
+	zip unzip gzip bzip2 xz-utils tar p7zip-full \
+	curl wget netcat net-tools aptitude
 
 # Generate the locales
-RUN locale-gen $LANG
+RUN locale-gen $LANG && update-locale LANG=$LANG LANGUAGE=$LANGUAGE LC_ALL=$LC_ALL
 
 # Configure the time-zone
-RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
-	dpkg-reconfigure -f noninteractive tzdata
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -y update && \
-	apt-get -y install sudo less htop net-tools wget curl \
-	screen git keychain gawk \
+RUN apt-get -y install less htop screen \
+	git keychain gawk \
 	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
-	zlib1g-dev libbz2-dev gzip tar unzip \
+	zlib1g-dev libbz2-dev \
 	lsb-release libgmp-dev \
-	gcc g++ cmake manpages \
-	m4 autoconf libtool build-essential cppcheck clang \
+	gcc g++ cppcheck clang cmake manpages patch pkg-config \
+	m4 autoconf automake libtool libltdl-dev build-essential \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
-	libzmqpp-dev libssl-dev libffi-dev \
+	libzmq5-dev libczmq-dev libssl-dev libffi-dev \
 	swig graphviz libopenblas-dev && \
     apt-get -y install libmpich-dev libopenmpi-dev \
-	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
-	postgresql-server-dev-all \
+	sqlite3 libsqlite3-dev \
+	mariadb-client libmariadbclient-dev \
+	libpqxx-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python3 libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \

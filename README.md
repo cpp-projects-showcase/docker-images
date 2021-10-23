@@ -22,10 +22,8 @@ The supported Linux distributions are
 [Ubuntu 20.04 LTS (Focal Fossa)](http://releases.ubuntu.com/20.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
 [Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/),
-[Debian 10 (Buster)](https://www.debian.org/releases/buster/)
-and [Debian 9 (Stretch)](https://www.debian.org/releases/stretch/).
-[Debian 11 (Bullseye)](https://www.debian.org/releases)(release expected 14 August 2021)
-may be supported next.
+[Debian 11 (Bullseye)](https://www.debian.org/releases/bullseye/)
+and [Debian 10 (Buster)](https://www.debian.org/releases/buster/).
 
 Every time some changes are committed on the
 [project's GitHub repository](https://github.com/cpp-projects-showcase/docker-images),
@@ -53,8 +51,8 @@ available for every one to use.
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
   (`<linux-distrib>` may be one of `centos8`, `centos7`,
-  `fedora34`, `fedora33`, `debian10` or `debian9`,
-  `ubuntu2004`, `ubuntu1804`, `ubuntu1604`):
+  `fedora34`, `fedora33`, `debian11`, `debian10`,
+  `ubuntu2004`, `ubuntu1804` or `ubuntu1604`):
 ```bash
 $ docker pull infrahelpers/cpppython:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it infrahelpers/cpppython:<linux-distrib>
@@ -110,8 +108,9 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos8`, `centos7`, `ubuntu2004`,
-`ubuntu1804`, `ubuntu1604`, `debian10` or `debian9`:
+`<linux-distrib>` may be one of `centos8`, `centos7`,
+  `fedora34`, `fedora33`, `debian11`, `debian10`,
+  `ubuntu2004`, `ubuntu1804` or `ubuntu1604`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev
