@@ -100,10 +100,10 @@ RUN pyenv install 3.9.7 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.7"
 # Python 3.10.0
-RUN pyenv install 3.10.0 && \
-    pyenv global 3.10.0 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.0"
+#RUN pyenv install 3.10.0 && \
+#    pyenv global 3.10.0 && \
+#    pip install -U pip pipenv
+#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.0"
 
 # Entry point
 CMD ["/bin/bash"]
