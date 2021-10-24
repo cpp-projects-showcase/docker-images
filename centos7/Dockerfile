@@ -13,8 +13,6 @@ ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
-# Check https://github.com/mikefarah/yq/releases/latest for the latest releases
-ENV YQ_VERSION 4.13.5
 
 # Import the Centos-7 GPG key to prevent warnings
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
@@ -28,9 +26,9 @@ RUN yum -y clean all && \
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN yum -y install dnf && \
-  dnf -y upgrade && \
-  dnf -y install less htop net-tools which sudo man vim \
+RUN yum -y install dnf
+RUN dnf -y upgrade && \
+	dnf -y install less htop net-tools which sudo man vim \
 	git-all wget curl file bash-completion keyutils Lmod \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
 	autoconf automake libtool \
@@ -41,22 +39,23 @@ RUN yum -y install dnf && \
 	xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mariadb-devel \
-	soci-mysql-devel soci-sqlite3-devel && \
-  dnf -y install libicu-devel \
+	soci-mysql-devel soci-sqlite3-devel
+RUN dnf -y install libicu-devel \
 	protobuf-devel protobuf-compiler \
 	python36 python36-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
 	rake rubygem-rake \
-	jq && \
-  dnf -y install "tex(latex)" texlive-epstopdf-bin
+	jq
+RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
 
-# yq, the YAML CLI utility like jq, but for YAML
-RUN curl -L -s \
-	  https://github.com/mikefarah/yq/releases/download/v$YQ_VERSION/yq_linux_amd64 \
-	  -o /usr/local/bin/yq && \
-	chmod 775 /usr/local/bin/yq
+# yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
+RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1) && \
+	curl -Ls \
+         https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_amd64 \
+         -o /usr/local/bin/yq && \
+    chmod 775 /usr/local/bin/yq
 
 # Create the `build` user (for the development activities)
 RUN adduser build

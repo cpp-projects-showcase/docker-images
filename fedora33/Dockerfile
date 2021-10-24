@@ -13,8 +13,6 @@ ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
-# Check https://github.com/mikefarah/yq/releases/latest for the latest releases
-ENV YQ_VERSION 4.13.5
 
 # Update of Fedora and configure the locale
 RUN dnf -y clean all && \
@@ -27,7 +25,8 @@ RUN dnf -y clean all && \
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN dnf -y install less htop net-tools which sudo man vim \
+RUN dnf -y upgrade && \
+	dnf -y install less htop net-tools which sudo man vim \
 	git-all wget curl file bash-completion keyutils \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
 	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
@@ -35,8 +34,8 @@ RUN dnf -y install less htop net-tools which sudo man vim \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mysql-devel \
-	soci-mysql-devel soci-sqlite3-devel && \
-  dnf -y install libicu-devel protobuf-devel protobuf-compiler \
+	soci-mysql-devel soci-sqlite3-devel
+RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
 	python36 \
 	python3-django python3-mod_wsgi \
 	python38 \
@@ -45,15 +44,16 @@ RUN dnf -y install less htop net-tools which sudo man vim \
 	graphviz ghostscript doxygen \
 	R-devel \
 	rubygem-rake \
-	jq && \
-  dnf -y install "tex(latex)" texlive-epstopdf-bin && \
-  dnf -y clean all
+	jq
+RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
+RUN dnf -y clean all
 
-# yq, the YAML CLI utility like jq, but for YAML
-RUN curl -L -s \
-	  https://github.com/mikefarah/yq/releases/download/v$YQ_VERSION/yq_linux_amd64 \
-	  -o /usr/local/bin/yq && \
-	chmod 775 /usr/local/bin/yq
+# yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
+RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1) && \
+	curl -Ls \
+         https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_amd64 \
+         -o /usr/local/bin/yq && \
+    chmod 775 /usr/local/bin/yq
 
 # Create the `build` user (for the development activities)
 RUN adduser build

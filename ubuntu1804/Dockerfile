@@ -13,64 +13,71 @@ ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
-# Check https://github.com/SOCI/soci/tags for the latest releases
-ENV SOCI_VER 4.0.2
-# Check https://github.com/mikefarah/yq/releases/latest for the latest releases
-ENV YQ_VERSION 4.13.5
 
 # Update the system
-RUN apt-get update && apt-get -y install locales apt-utils && apt-get -y upgrade
+RUN echo "Europe/Paris" > /etc/timezone
+RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
+RUN apt-get -qq update
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+	apt-utils apt-transport-https \
+	ca-certificates locales tzdata sudo \
+	zip unzip gzip bzip2 xz-utils tar unrar p7zip-full \
+	curl wget netcat net-tools aptitude
 
 # Generate the locales
-RUN locale-gen $LANG
+RUN locale-gen $LANG && \
+	update-locale LANG=$LANG LANGUAGE=$LANGUAGE LC_ALL=$LC_ALL
 
 # Configure the time-zone
-RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
-	dpkg-reconfigure -f noninteractive tzdata
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -y update && \
-	apt-get -y install sudo less htop net-tools wget curl \
-	screen git keychain gawk \
+RUN apt-get -qq update && \
+    apt-get -y install procps sudo less htop screen \
+	git keychain gettext-base gawk \
 	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
-	zlib1g-dev libbz2-dev gzip tar unzip \
+	zlib1g-dev libbz2-dev \
 	lsb-release libgmp-dev \
-	gcc g++ cmake manpages \
-	m4 autoconf libtool build-essential cppcheck clang \
+	gcc g++ cppcheck clang cmake manpages patch pkg-config \
+	m4 autoconf automake libtool libltdl-dev build-essential \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
-	libzmqpp-dev libssl-dev libffi-dev \
-	swig graphviz libopenblas-dev && \
-    apt-get -y install libmpich-dev libopenmpi-dev \
-	sqlite3 libsqlite3-dev libmariadb-dev libmysql++-dev \
-	postgresql-server-dev-all \
+	libzmqpp-dev libzmq3-dev libczmq-dev libssl-dev libffi-dev \
+	swig graphviz libopenblas-dev
+RUN apt-get -y install libmpich-dev libopenmpi-dev \
+	sqlite3 libsqlite3-dev \
+	mariadb-client libmariadbclient-dev \
+	postgresql-client \
+	libpqxx-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python3 libpython3-dev \
 	python3-django libapache2-mod-wsgi-py3 \
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
-	r-base r-base-dev \
 	rake \
 	jq
+#RUN apt-get -y install r-base r-base-dev
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# yq, the YAML CLI utility like jq, but for YAML
-RUN curl -L -s \
-	  https://github.com/mikefarah/yq/releases/download/v$YQ_VERSION/yq_linux_amd64 \
-	  -o /usr/local/bin/yq && \
-	chmod 775 /usr/local/bin/yq
+# yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
+RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1) && \
+	curl -Ls \
+         https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_amd64 \
+         -o /usr/local/bin/yq && \
+    chmod 775 /usr/local/bin/yq
 
-# SOCI
+# SOCI (https://github.com/SOCI/soci)
 RUN mkdir -p /opt/soci
 ADD resources/soci-debian-cmake.patch /opt/soci/soci-debian-cmake.patch
-RUN curl -L -s \
-         https://github.com/SOCI/soci/archive/refs/tags/v$SOCI_VER.tar.gz \
-         -o /opt/soci/soci-$SOCI_VER.tar.gz && cd /opt/soci && \
-    tar zxf soci-$SOCI_VER.tar.gz && rm -f soci-$SOCI_VER.tar.gz && \
-    cd soci-$SOCI_VER && patch -p1 < ../soci-debian-cmake.patch && \
+RUN SOCI_VER=$(curl -Ls https://api.github.com/repos/SOCI/soci/tags|jq -r '.[].name'|grep "^v"|sort -r|head -1|cut -d'v' -f2,2) && \
+	curl -Ls \
+         https://github.com/SOCI/soci/archive/refs/tags/v${SOCI_VER}.tar.gz \
+         -o /opt/soci/soci-${SOCI_VER}.tar.gz && cd /opt/soci && \
+    tar zxf soci-${SOCI_VER}.tar.gz && rm -f soci-${SOCI_VER}.tar.gz && \
+    cd soci-${SOCI_VER} && patch -p1 < ../soci-debian-cmake.patch && \
     mkdir -p build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
           -DSOCI_CXX11=ON -DSOCI_TESTS=OFF .. && \
