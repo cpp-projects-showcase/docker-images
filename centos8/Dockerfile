@@ -97,7 +97,7 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 # Hack to git update $HOME/.pyenv
 WORKDIR $HOME/.pyenv
-RUN git pull
+RUN git pull && hash -r
 WORKDIR $HOME
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
