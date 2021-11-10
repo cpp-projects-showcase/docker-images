@@ -1,10 +1,10 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/centos7
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora35
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/centos:7
+FROM docker.io/library/fedora:35
 
-LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
+LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
 
 # Docker build time environment variables
@@ -14,41 +14,39 @@ ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 
-# Import the Centos-7 GPG key to prevent warnings
-RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
-
-# Update of CentOS
-RUN yum -y clean all && \
-    yum -y upgrade && \
-    yum -y install epel-release
+# Update of Fedora and configure the locale
+RUN dnf -y clean all && \
+    dnf -y upgrade && \
+	dnf -y install glibc-locale-source glibc-langpack-en && \
+	dnf -y clean all && \
+	localedef -f UTF-8 -i en_US $LANG 
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN yum -y install dnf
 RUN dnf -y upgrade && \
 	dnf -y install less htop net-tools which sudo man vim \
-	git-all wget curl file bash-completion keyutils Lmod \
+	git-all wget curl file bash-completion keyutils \
 	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
-	autoconf automake libtool \
-	gcc gcc-c++ cmake cmake3 m4 \
-	lcov cppunit-devel \
+	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
-	boost-devel boost169-devel boost169-python3-devel \
-	xapian-core-devel openssl-devel libffi-devel \
+	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
-	readline-devel sqlite-devel mariadb-devel \
+	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel
-RUN dnf -y install libicu-devel \
-	protobuf-devel protobuf-compiler \
-	python36 python36-devel \
+RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
+	python36 \
+	python3-django python3-mod_wsgi \
+	python38 \
+	python3-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
-	rake rubygem-rake \
+	rubygem-rake \
 	jq
 RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
+RUN dnf -y clean all
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
 RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1) && \
@@ -104,11 +102,10 @@ RUN pyenv install 3.9.8 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.8"
 # Python 3.10.0
-#RUN pyenv install 3.10.0 && \
-#    pyenv global 3.10.0 && \
-#    pip install -U pip pipenv
-#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.0"
+RUN pyenv install 3.10.0 && \
+    pyenv global 3.10.0 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.0"
 
 # Entry point
 CMD ["/bin/bash"]
-

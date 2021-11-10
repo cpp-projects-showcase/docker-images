@@ -106,7 +106,7 @@ USER build
 # Git prompt
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
-# Python Pyenv and pipenv
+# Python Pyenv and pipenv (https://www.python.org/downloads/)
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 # Python 3.8.12
@@ -119,6 +119,11 @@ RUN pyenv install 3.9.7 && \
     pyenv global 3.9.7 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.7"
+# Python 3.9.8
+RUN pyenv install 3.9.8 && \
+    pyenv global 3.9.8 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.8"
 # Python 3.10.0
 RUN pyenv install 3.10.0 && \
     pyenv global 3.10.0 && \
