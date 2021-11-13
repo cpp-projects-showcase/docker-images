@@ -28,7 +28,7 @@ ADD resources/bashrc /root/.bashrc
 RUN dnf -y upgrade && \
 	dnf -y install less htop net-tools which sudo man vim \
 	git-all wget curl file bash-completion keyutils \
-	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
+	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
 	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
