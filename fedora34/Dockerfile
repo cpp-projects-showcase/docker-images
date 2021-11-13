@@ -2,7 +2,7 @@
 # Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora34
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/library/fedora:34
+FROM docker.io/fedora:34
 
 LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
