@@ -17,11 +17,12 @@ Some basic support for [R](http://r-project.org) is also provided.
 The supported Linux distributions are
 [CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
+[Fedora 35](https://docs.fedoraproject.org/en-US/fedora/f35/release-notes/index.html),
 [Fedora 34](https://docs.fedoraproject.org/en-US/fedora/f34/release-notes/index.html),
-[Fedora 33](https://docs.fedoraproject.org/en-US/fedora/f33/release-notes/index.html),
-[Ubuntu 20.04 LTS (Focal Fossa)](http://releases.ubuntu.com/20.04/),
-[Ubuntu 18.04 LTS (Bionic Beaver)](http://releases.ubuntu.com/18.04/),
-[Ubuntu 16.04 LTS (Xenial Xerus)](http://releases.ubuntu.com/16.04/),
+[(to come in April 2022) Ubuntu 22.04 LTS (Jammy Jellyfish)](https://www.omgubuntu.co.uk/2022/01/ubuntu-22-04-release-features),
+[Ubuntu 20.04 LTS (Focal Fossa)](https://releases.ubuntu.com/20.04/),
+[Ubuntu 18.04 LTS (Bionic Beaver)](https://releases.ubuntu.com/18.04/),
+[Ubuntu 16.04 LTS (Xenial Xerus)](https://releases.ubuntu.com/16.04/),
 [Debian 11 (Bullseye)](https://www.debian.org/releases/bullseye/)
 and [Debian 10 (Buster)](https://www.debian.org/releases/buster/).
 
