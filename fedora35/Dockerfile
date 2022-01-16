@@ -10,16 +10,17 @@ LABEL version="0.1"
 # Docker build time environment variables
 ENV container docker
 ENV HOME /home/build
+
+# Update of Fedora and configure the locale
+RUN dnf -y upgrade && \
+	dnf -y install glibc-locale-source glibc-langpack-en && \
+	dnf -y clean all && \
+	localedef -f UTF-8 -i en_US en_US.UTF-8
+
+#
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
-
-# Update of Fedora and configure the locale
-RUN dnf -y clean all && \
-    dnf -y upgrade && \
-	dnf -y install glibc-locale-source glibc-langpack-en && \
-	dnf -y clean all && \
-	localedef -f UTF-8 -i en_US $LANG 
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
