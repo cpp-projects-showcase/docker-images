@@ -11,6 +11,9 @@ LABEL version="0.1"
 ENV container docker
 ENV HOME /home/build
 
+# Work around for what appears a bug on Docker Hub for Fedora 35
+RUN echo "152.19.134.142 mirrors.fedoraproject.org" >> /etc/hosts
+
 # Update of Fedora and configure the locale
 RUN dnf -y upgrade && \
 	dnf -y install glibc-locale-source glibc-langpack-en && \
