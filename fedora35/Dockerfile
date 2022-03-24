@@ -90,26 +90,26 @@ RUN git pull
 WORKDIR $HOME
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.12
-RUN pyenv install 3.8.12 && \
-    pyenv global 3.8.12 && \
+# Python 3.8.13
+RUN pyenv install 3.8.13 && \
+    pyenv global 3.8.13 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.12"
-# Python 3.9.9
-RUN pyenv install 3.9.9 && \
-    pyenv global 3.9.9 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.9"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.13"
 # Python 3.9.10
 RUN pyenv install 3.9.10 && \
     pyenv global 3.9.10 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.10"
-# Python 3.10.2
-RUN pyenv install 3.10.2 && \
-    pyenv global 3.10.2 && \
+# Python 3.9.12
+RUN pyenv install 3.9.12 && \
+    pyenv global 3.9.12 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.2"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.12"
+# Python 3.10.4
+RUN pyenv install 3.10.4 && \
+    pyenv global 3.10.4 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.4"
 
 # Entry point
 CMD ["/bin/bash"]
