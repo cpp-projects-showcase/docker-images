@@ -2,7 +2,13 @@
 # Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/centos8
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/centos:8
+# Base image:
+# * Hub/cloud: 'stream8' on
+#   + Docker.io: https://hub.docker.com/r/tgagor/centos-stream 
+#   + Quay.io: https://quay.io/repository/centos/centos?tab=tags
+# * Dockerfile: https://github.com/tgagor/docker-centos/blob/master/stream8/Dockerfile
+#
+FROM quay.io/centos/centos:stream8
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"

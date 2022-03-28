@@ -87,6 +87,9 @@ WORKDIR $HOME/.pyenv
 RUN git pull && hash -r
 WORKDIR $HOME
 
+# Hack to force rebuild
+RUN touch /root/TMP_TO_BE_DELETED
+
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 # Python 3.8.13
 RUN pyenv install 3.8.13 && \
