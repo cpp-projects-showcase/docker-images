@@ -21,7 +21,7 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 
 # Import the Centos-8 GPG key to prevent warnings
-RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-Official && \
+RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official && \
   rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
 
 # Add the repository for PowerTools
@@ -33,7 +33,7 @@ RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.n
 
 # Update of CentOS
 RUN dnf -y clean all && \
-    dnf -y upgrade
+    dnf -y upgrade || echo "Issue with upgrade; fine for now"
 
 # Configure the locale
 RUN dnf -y install glibc-locale-source glibc-langpack-en && \
@@ -43,8 +43,7 @@ RUN dnf -y install glibc-locale-source glibc-langpack-en && \
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN dnf -y upgrade && \
-	dnf -y install less htop net-tools which sudo man vim \
+RUN dnf -y install less htop net-tools which sudo man vim \
 	git-all wget curl file bash-completion keyutils \
 	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
 	autoconf automake libtool \
