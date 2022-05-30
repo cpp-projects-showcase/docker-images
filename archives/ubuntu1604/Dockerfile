@@ -1,8 +1,8 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/debian11
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu1604
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/debian:11
+FROM docker.io/ubuntu:16.04
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -12,43 +12,34 @@ ENV container docker
 ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
-ENV LANG4GEN en_US.utf8
 ENV LC_ALL $LANG
 
 # Update the system
-RUN echo "Europe/Paris" > /etc/timezone
-RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
-RUN apt-get -qq update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
-	apt-utils apt-transport-https \
-	ca-certificates locales locales-all tzdata sudo \
-	zip unzip gzip bzip2 xz-utils tar p7zip-full \
-	curl wget netcat net-tools aptitude
+RUN apt-get update && apt-get -y install locales apt-utils && apt-get -y upgrade
 
 # Generate the locales
-RUN locale-gen $LANG && \
-	update-locale LANG=$LANG LANGUAGE=$LANGUAGE LC_ALL=$LC_ALL
+RUN locale-gen $LANG
 
 # Configure the time-zone
-RUN dpkg-reconfigure -f noninteractive tzdata
+RUN apt-get -y install tzdata && echo "Europe/Paris" > /etc/timezone && \
+	dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -qq update && \
-    apt-get -y install procps less htop screen \
-	git keychain gettext-base gawk \
+RUN apt-get -y update && \
+	apt-get -y install procps sudo less htop net-tools wget curl \
+	screen git keychain gawk \
 	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
-	zlib1g-dev libbz2-dev \
+	zlib1g-dev libbz2-dev gzip tar unzip \
 	lsb-release libgmp-dev \
-	gcc g++ cppcheck clang cmake manpages patch pkg-config \
-	m4 autoconf automake libtool libltdl-dev build-essential \
+	gcc g++ cmake manpages \
+	m4 autoconf libtool build-essential cppcheck clang \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
-	libzmq5-dev libczmq-dev libssl-dev libffi-dev \
+	libzmqpp-dev libssl-dev libffi-dev \
 	swig graphviz libopenblas-dev
 RUN apt-get -y install libmpich-dev libopenmpi-dev \
-	sqlite3 libsqlite3-dev \
-	mariadb-client default-libmysqlclient-dev \
+	sqlite3 libsqlite3-dev libmysql++-dev \
 	postgresql-client \
 	libpqxx-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \
@@ -59,6 +50,7 @@ RUN apt-get -y install libmpich-dev libopenmpi-dev \
 	r-base r-base-dev \
 	rake \
 	jq
+#RUN apt-get -y install mariadb-client libmariadbclient-dev
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -106,7 +98,7 @@ USER build
 # Git prompt
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
-# Python Pyenv and pipenv (https://www.python.org/downloads/)
+# Python, Pyenv and pipenv (https://www.python.org/downloads/)
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 # Hack to git update $HOME/.pyenv
@@ -131,10 +123,10 @@ RUN pyenv install 3.9.13 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.13"
 # Python 3.10.4
-RUN pyenv install 3.10.4 && \
-    pyenv global 3.10.4 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.4"
+#RUN pyenv install 3.10.4 && \
+#    pyenv global 3.10.4 && \
+#    pip install -U pip pipenv
+#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.4"
 
 # Entry point
 CMD ["/bin/bash"]

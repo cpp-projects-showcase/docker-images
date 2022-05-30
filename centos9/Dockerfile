@@ -1,8 +1,14 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/centos7
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/centos9
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/centos:7
+# Base image:
+# * Hub/cloud: 'stream9' on
+#   + Docker.io: https://hub.docker.com/r/tgagor/centos-stream 
+#   + Quay.io: https://quay.io/repository/centos/centos?tab=tags
+# * Dockerfile: https://github.com/tgagor/docker-centos/blob/master/stream8/Dockerfile
+#
+FROM quay.io/centos/centos:stream9
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -14,41 +20,53 @@ ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 
-# Import the Centos-7 GPG key to prevent warnings
-RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
+# Import the Centos-8 GPG key to prevent warnings
+RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official && \
+  rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
+
+# Add the repository for PowerTools
+RUN dnf -y install 'dnf-command(config-manager)'
+RUN dnf config-manager --set-enabled powertools
+
+# Add EPEL support
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 # Update of CentOS
-RUN yum -y clean all && \
-    yum -y upgrade && \
-    yum -y install epel-release
+RUN dnf -y clean all && \
+    dnf -y upgrade || echo "Issue with upgrade; fine for now"
+
+# Configure the locale
+RUN dnf -y install glibc-locale-source glibc-langpack-en && \
+	localedef -f UTF-8 -i en_US $LANG
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN yum -y install dnf
-RUN dnf -y upgrade && \
-	dnf -y install less htop net-tools which sudo man vim \
-	git-all wget curl file bash-completion keyutils Lmod \
-	zlib-devel bzip2-devel gzip tar rpmconf yum-utils \
+RUN dnf -y install less htop net-tools which sudo man vim \
+	git-all wget curl file bash-completion keyutils \
+	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
 	autoconf automake libtool \
-	gcc gcc-c++ cmake cmake3 m4 \
-	lcov cppunit-devel \
+	langtable gcc gcc-c++ cmake m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
-	boost-devel boost169-devel boost169-python3-devel \
+	boost169-devel boost169-python3-devel \
 	xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
-	readline-devel sqlite-devel mariadb-devel \
+	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel
 RUN dnf -y install libicu-devel \
 	protobuf-devel protobuf-compiler \
 	python36 python36-devel \
+	python3-django python3-mod_wsgi \
+	python38 python38-devel \
+	python39 python39-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
 	rake rubygem-rake \
 	jq
 RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
+RUN dnf -y clean all
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
 RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1) && \
@@ -87,9 +105,6 @@ WORKDIR $HOME/.pyenv
 RUN git pull && hash -r
 WORKDIR $HOME
 
-# Hack to force rebuild
-RUN touch $HOME/TMP_TO_BE_DELETED
-
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 # Python 3.8.13
 RUN pyenv install 3.8.13 && \
@@ -107,11 +122,12 @@ RUN pyenv install 3.9.13 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.13"
 # Python 3.10.4
-#RUN pyenv install 3.10.4 && \
-#    pyenv global 3.10.4 && \
-#    pip install -U pip pipenv
-#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.4"
+RUN pyenv install 3.10.4 && \
+    pyenv global 3.10.4 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.4"
 
 # Entry point
 CMD ["/bin/bash"]
+
 

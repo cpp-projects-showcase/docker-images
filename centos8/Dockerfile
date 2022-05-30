@@ -111,16 +111,16 @@ RUN pyenv install 3.8.13 && \
     pyenv global 3.8.13 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.13"
-# Python 3.9.10
-RUN pyenv install 3.9.10 && \
-    pyenv global 3.9.10 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.10"
 # Python 3.9.12
 RUN pyenv install 3.9.12 && \
     pyenv global 3.9.12 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.12"
+# Python 3.9.13
+RUN pyenv install 3.9.13 && \
+    pyenv global 3.9.13 && \
+    pip install -U pip pipenv
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.13"
 # Python 3.10.4
 RUN pyenv install 3.10.4 && \
     pyenv global 3.10.4 && \
