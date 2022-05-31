@@ -43,11 +43,11 @@ RUN apt-get -qq update && \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
-	libzmqpp-dev libzmq3-dev libczmq-dev libssl-dev libffi-dev \
+	libczmq4 libczmq-dev libssl-dev libffi-dev \
 	swig graphviz libopenblas-dev
 RUN apt-get -y install libmpich-dev libopenmpi-dev \
 	sqlite3 libsqlite3-dev \
-	mariadb-client libmariadbclient-dev \
+	mysql-client libmysqlclient-dev \
 	postgresql-client \
 	libpqxx-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \

@@ -24,12 +24,12 @@ ENV LC_ALL $LANG
 RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official && \
   rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
 
-# Add the repository for PowerTools
+# Add the repository for CodeReady Linux Builder (CRB)
 RUN dnf -y install 'dnf-command(config-manager)'
-RUN dnf config-manager --set-enabled powertools
+RUN dnf config-manager --set-enabled crb
 
 # Add EPEL support
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
 # Update of CentOS
 RUN dnf -y clean all && \
