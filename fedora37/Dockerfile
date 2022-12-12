@@ -1,8 +1,8 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora36
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora37
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM fedora:36
+FROM fedora:37
 
 LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
@@ -10,9 +10,6 @@ LABEL version="0.1"
 # Docker build time environment variables
 ENV container docker
 ENV HOME /home/build
-
-# Work around for what appears a bug on Docker Hub for Fedora 35
-#RUN echo "152.19.134.142 mirrors.fedoraproject.org" >> /etc/hosts
 
 # Update of Fedora and configure the locale
 RUN dnf -y upgrade && \
