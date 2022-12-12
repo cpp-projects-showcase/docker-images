@@ -48,21 +48,18 @@ RUN dnf -y install less htop net-tools which sudo man vim \
 	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
 	autoconf automake libtool \
 	langtable gcc gcc-c++ cmake m4 cppunit-devel \
-	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
-	boost169-devel boost169-python3-devel \
-	xapian-core-devel openssl-devel libffi-devel \
+	zeromq-devel czmq-devel cppzmq-devel openblas \
+	boost-devel boost-devel \
+	xapian-core-libs xapian-bindings openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel
 RUN dnf -y install libicu-devel \
-	protobuf-devel protobuf-compiler \
-	python36 python36-devel \
-	python3-django python3-mod_wsgi \
-	python38 python38-devel \
-	python39 python39-devel \
+	protobuf protobuf-c python3-protobuf \
+	python python-devel \
+	python3-mod_wsgi \
 	geos-devel \
 	graphviz ghostscript doxygen \
-	R-devel \
 	rake rubygem-rake \
 	jq
 RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
