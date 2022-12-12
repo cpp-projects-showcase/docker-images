@@ -46,7 +46,7 @@ ADD resources/bashrc /root/.bashrc
 RUN dnf -y install curl-minimal --skip-broken --best --allowerasing
 RUN dnf -y install less htop net-tools which sudo man vim \
 	git-all wget file bash-completion keyutils \
-	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
+	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf yum-utils \
 	autoconf automake libtool \
 	langtable gcc gcc-c++ cmake m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas \
