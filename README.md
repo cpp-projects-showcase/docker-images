@@ -52,8 +52,8 @@ available for every one to use.
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
   (`<linux-distrib>` may be one of `centos8`, `centos7`,
-  `fedora35`, `fedora34`, `debian11`, `debian10`,
-  `ubuntu2004`, `ubuntu1804` or `ubuntu1604`):
+  `fedora37`, `fedora36`, `debian11`, `debian10`,
+  `ubuntu2204`, `ubuntu2004` or `ubuntu1804`):
 ```bash
 $ docker pull infrahelpers/cpppython:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it infrahelpers/cpppython:<linux-distrib>
@@ -110,8 +110,8 @@ Resolving deltas: 100% (3665/3665), done.
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
 `<linux-distrib>` may be one of `centos8`, `centos7`,
-  `fedora35`, `fedora34`, `debian11`, `debian10`,
-  `ubuntu2004`, `ubuntu1804` or `ubuntu1604`:
+  `fedora37`, `fedora36`, `debian11`, `debian10`,
+  `ubuntu2204`, `ubuntu2004` or `ubuntu1804`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev
