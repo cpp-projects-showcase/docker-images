@@ -1,5 +1,5 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/centos7
+# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/master/centos7
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
 FROM docker.io/centos:7
@@ -15,7 +15,7 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
 
 # Import the Centos-7 GPG key to prevent warnings
-RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
+RUN rpm --import https://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
 
 # Update of CentOS
 RUN yum -y clean all && \
