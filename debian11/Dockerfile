@@ -1,5 +1,6 @@
 #
 # Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/debian11
+# Usual Docker tag: infrahelpers/cpppython:debian11
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
 FROM docker.io/debian:11

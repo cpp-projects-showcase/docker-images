@@ -1,5 +1,6 @@
 #
 # Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora36
+# Usual Docker tag: infrahelpers/cpppython:fedora36
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
 FROM fedora:36

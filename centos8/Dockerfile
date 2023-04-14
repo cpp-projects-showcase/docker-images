@@ -1,5 +1,6 @@
 #
 # Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/master/centos8
+# Usual Docker tag: infrahelpers/cpppython:centos8
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
 # Base image:

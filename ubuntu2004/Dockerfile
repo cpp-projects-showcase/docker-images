@@ -1,5 +1,6 @@
 #
 # Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu2004
+# Usual Docker tag: infrahelpers/cpppython:ubuntu2004
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
 FROM docker.io/ubuntu:20.04
