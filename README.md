@@ -15,16 +15,16 @@ modules need to be compiled with C++).
 Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
-[CentOS 8](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
+[CentOS 9 Stream](https://blog.centos.org/2021/12/introducing-centos-stream-9/),
+[CentOS 8 Stream](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
-[Fedora 35](https://docs.fedoraproject.org/en-US/fedora/f35/release-notes/index.html),
-[Fedora 34](https://docs.fedoraproject.org/en-US/fedora/f34/release-notes/index.html),
-[(to come in April 2022) Ubuntu 22.04 LTS (Jammy Jellyfish)](https://www.omgubuntu.co.uk/2022/01/ubuntu-22-04-release-features),
+[Fedora 38](https://docs.fedoraproject.org/en-US/fedora/f38/release-notes/index.html),
+[Fedora 37](https://docs.fedoraproject.org/en-US/fedora/f37/release-notes/index.html),
+[Ubuntu 22.04 LTS (Jammy Jellyfish)](https://www.omgubuntu.co.uk/2022/01/ubuntu-22-04-release-features),
 [Ubuntu 20.04 LTS (Focal Fossa)](https://releases.ubuntu.com/20.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](https://releases.ubuntu.com/18.04/),
-[Ubuntu 16.04 LTS (Xenial Xerus)](https://releases.ubuntu.com/16.04/),
-[Debian 11 (Bullseye)](https://www.debian.org/releases/bullseye/)
-and [Debian 10 (Buster)](https://www.debian.org/releases/buster/).
+[Debian 12 (Bookworm)](https://www.debian.org/releases/bookworm/),
+and [Debian 11 (Bullseye)](https://www.debian.org/releases/bullseye/).
 
 Every time some changes are committed on the
 [project's GitHub repository](https://github.com/cpp-projects-showcase/docker-images),
@@ -52,7 +52,7 @@ available for every one to use.
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
   (`<linux-distrib>` may be one of `centos8`, `centos7`,
-  `fedora37`, `fedora36`, `debian11`, `debian10`,
+  `fedora38`, `fedora37`, `debian12`, `debian11`,
   `ubuntu2204`, `ubuntu2004` or `ubuntu1804`):
 ```bash
 $ docker pull infrahelpers/cpppython:<linux-distrib>
@@ -109,8 +109,8 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos8`, `centos7`,
-  `fedora37`, `fedora36`, `debian11`, `debian10`,
+`<linux-distrib>` may be one of `centos9`, `centos8`, `centos7`,
+  `fedora38`, `fedora37`, `debian12`, `debian11`,
   `ubuntu2204`, `ubuntu2004` or `ubuntu1804`:
 ```bash
 $ mkdir -p ~/dev
