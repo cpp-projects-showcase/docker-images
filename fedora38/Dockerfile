@@ -1,9 +1,9 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora37
-# Usual Docker tag: infrahelpers/cpppython:fedora37
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora38
+# Usual Docker tag: infrahelpers/cpppython:fedora38
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM fedora:37
+FROM fedora:38
 
 LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
@@ -38,10 +38,10 @@ RUN dnf -y upgrade && \
 	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel
 RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
-	python36 \
-	python3-django python3-mod_wsgi \
-	python38 \
-	python3-devel \
+	python3-mod_wsgi \
+	python3 python3-devel \
+	python3.8 python3.9 \
+	python3.10 python3.10-devel python3.12 python3.12-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
