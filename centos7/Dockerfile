@@ -89,7 +89,7 @@ RUN git pull && hash -r
 WORKDIR $HOME
 
 # Hack to force rebuild
-RUN touch $HOME/TMP_TO_BE_DELETED2
+#RUN touch $HOME/TMP_TO_BE_DELETED2
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 # Python 3.8.18
