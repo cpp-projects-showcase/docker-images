@@ -3,7 +3,7 @@
 # Usual Docker tag: infrahelpers/cpppython:debian11
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/debian:11
+FROM docker.io/debian:12
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
