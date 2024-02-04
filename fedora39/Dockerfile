@@ -1,71 +1,51 @@
 #
-# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/master/centos8
-# Usual Docker tag: infrahelpers/cpppython:centos8
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/fedora39
+# Usual Docker tag: infrahelpers/cpppython:fedora39
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-# Base image:
-# * Hub/cloud: 'stream8' on
-#   + Docker.io: https://hub.docker.com/r/tgagor/centos-stream 
-#   + Quay.io: https://quay.io/repository/centos/centos?tab=tags
-# * Dockerfile: https://github.com/tgagor/docker-centos/blob/master/stream8/Dockerfile
-#
-FROM quay.io/centos/centos:stream8
+FROM fedora:39
 
-LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
+LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
 
 # Docker build time environment variables
 ENV container docker
 ENV HOME /home/build
+
+# Update of Fedora and configure the locale
+RUN dnf -y upgrade && \
+	dnf -y install glibc-locale-source glibc-langpack-en && \
+	dnf -y clean all && \
+	localedef -f UTF-8 -i en_US en_US.UTF-8
+
+#
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
-
-# Import the Centos-8 GPG key to prevent warnings
-RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official && \
-  rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
-
-# Add the repository for PowerTools
-RUN dnf -y install 'dnf-command(config-manager)'
-RUN dnf config-manager --set-enabled powertools
-
-# Add EPEL support
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-
-# Update of CentOS
-RUN dnf -y clean all && \
-    dnf -y upgrade || echo "Issue with upgrade; fine for now"
-
-# Configure the locale
-RUN dnf -y install glibc-locale-source glibc-langpack-en && \
-	localedef -f UTF-8 -i en_US $LANG
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN dnf -y install less htop net-tools bind-utils which sudo man vim \
+RUN dnf -y upgrade && \
+	dnf -y install less htop net-tools bind-utils which sudo man vim \
 	git-all wget curl file bash-completion keyutils \
 	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
-	autoconf automake libtool \
-	langtable gcc gcc-c++ cmake m4 cppunit-devel \
+	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
-	boost169-devel boost169-python3-devel \
-	xapian-core-devel openssl-devel libffi-devel \
+	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel
-RUN dnf -y install libicu-devel \
-	protobuf-devel protobuf-compiler \
-	python36 python36-devel \
-	python3-django python3-mod_wsgi \
-	python38 python38-devel \
-	python39 python39-devel \
-	python3.11 python3.11-devel \
+RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
+	python3-mod_wsgi \
+	python3 python3-devel \
+	python3.8 python3.9 \
+	python3.10 python3.10-devel python3.12 python3.12-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
-	rake rubygem-rake \
+	rubygem-rake \
 	jq
 RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
 RUN dnf -y clean all
@@ -104,7 +84,7 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 # Hack to git update $HOME/.pyenv
 WORKDIR $HOME/.pyenv
-RUN git pull && hash -r
+RUN git pull
 WORKDIR $HOME
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
@@ -136,5 +116,3 @@ RUN pyenv global system || echo "No default system version of Python. Sticking t
 
 # Entry point
 CMD ["/bin/bash"]
-
-

@@ -24,7 +24,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
 	apt-utils apt-transport-https \
 	ca-certificates locales locales-all tzdata sudo \
 	zip unzip gzip bzip2 xz-utils tar p7zip-full \
-	curl wget netcat-traditional net-tools aptitude
+	curl wget netcat-traditional net-tools bind9-host aptitude
 
 # Generate the locales
 RUN locale-gen $LANG && \
@@ -131,16 +131,16 @@ RUN pyenv install 3.10.13 && \
     pyenv global 3.10.13 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.13"
-# Python 3.11.6
-RUN pyenv install 3.11.6 && \
-    pyenv global 3.11.6 && \
+# Python 3.11.7
+RUN pyenv install 3.11.7 && \
+    pyenv global 3.11.7 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.6"
-# Python 3.12.0
-RUN pyenv install 3.12.0 && \
-    pyenv global 3.12.0 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.7"
+# Python 3.12.1
+RUN pyenv install 3.12.1 && \
+    pyenv global 3.12.1 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.0"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.1"
 
 # Entry point
 CMD ["/bin/bash"]

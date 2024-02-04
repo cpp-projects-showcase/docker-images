@@ -45,7 +45,7 @@ ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
 RUN dnf -y install curl-minimal --skip-broken --best --allowerasing
-RUN dnf -y install less htop net-tools which sudo man vim \
+RUN dnf -y install less htop net-tools bind-utils which sudo man vim \
 	git-all wget file bash-completion keyutils \
 	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf yum-utils \
 	autoconf automake libtool \
@@ -120,16 +120,16 @@ RUN pyenv install 3.10.13 && \
     pyenv global 3.10.13 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.13"
-# Python 3.11.6
-RUN pyenv install 3.11.6 && \
-    pyenv global 3.11.6 && \
+# Python 3.11.7
+RUN pyenv install 3.11.7 && \
+    pyenv global 3.11.7 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.6"
-# Python 3.12.0
-RUN pyenv install 3.12.0 && \
-    pyenv global 3.12.0 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.7"
+# Python 3.12.1
+RUN pyenv install 3.12.1 && \
+    pyenv global 3.12.1 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.0"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.1"
 
 # Entry point
 CMD ["/bin/bash"]
