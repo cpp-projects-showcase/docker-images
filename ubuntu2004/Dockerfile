@@ -130,16 +130,16 @@ RUN pyenv install 3.10.13 && \
     pyenv global 3.10.13 && \
     pip install -U pip pipenv
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.13"
-# Python 3.11.7
-RUN pyenv install 3.11.7 && \
-    pyenv global 3.11.7 && \
+# Python 3.11.8
+RUN pyenv install 3.11.8 && \
+    pyenv global 3.11.8 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.7"
-# Python 3.12.1
-RUN pyenv install 3.12.1 && \
-    pyenv global 3.12.1 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.8"
+# Python 3.12.2
+RUN pyenv install 3.12.2 && \
+    pyenv global 3.12.2 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.1"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.2"
 
 # Entry point
 CMD ["/bin/bash"]

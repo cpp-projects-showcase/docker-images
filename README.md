@@ -15,12 +15,14 @@ modules need to be compiled with C++).
 Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
+[Rocky Linux 9](https://docs.rockylinux.org/release_notes/9_3/),
 [CentOS 9 Stream](https://blog.centos.org/2021/12/introducing-centos-stream-9/),
 [CentOS 8 Stream](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
 [CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
+[Fedora 39](https://docs.fedoraproject.org/en-US/fedora/f39/release-notes/index.html),
 [Fedora 38](https://docs.fedoraproject.org/en-US/fedora/f38/release-notes/index.html),
-[Fedora 37](https://docs.fedoraproject.org/en-US/fedora/f37/release-notes/index.html),
-[Ubuntu 22.04 LTS (Jammy Jellyfish)](https://www.omgubuntu.co.uk/2022/01/ubuntu-22-04-release-features),
+[(TBC) Ubuntu 24.04 LTS (Noble Numbat)](https://tecadmin.net/ubuntu-24-04-lts/),
+[Ubuntu 22.04 LTS (Jammy Jellyfish)](https://releases.ubuntu.com/22.04/),
 [Ubuntu 20.04 LTS (Focal Fossa)](https://releases.ubuntu.com/20.04/),
 [Ubuntu 18.04 LTS (Bionic Beaver)](https://releases.ubuntu.com/18.04/),
 [Debian 12 (Bookworm)](https://www.debian.org/releases/bookworm/),
@@ -51,7 +53,7 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `centos8`, `centos7`,
+  (`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`, `centos7`,
   `fedora39`, `fedora38`, `debian12`, `debian11`,
   `ubuntu2204`, `ubuntu2004` or `ubuntu1804`):
 ```bash
@@ -109,7 +111,7 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `centos9`, `centos8`, `centos7`,
+`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`, `centos7`,
   `fedora39`, `fedora38`, `debian12`, `debian11`,
   `ubuntu2204`, `ubuntu2004` or `ubuntu1804`:
 ```bash

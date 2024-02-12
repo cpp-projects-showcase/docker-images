@@ -1,15 +1,17 @@
 #
-# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/master/centos9
-# Usual Docker tag: infrahelpers/cpppython:centos9
+# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/master/rocky9
+# Usual Docker tag: infrahelpers/cpppython:rocky9
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-# Base image:
-# * Hub/cloud: 'stream9' on
-#   + Docker.io: https://hub.docker.com/r/tgagor/centos-stream 
-#   + Quay.io: https://quay.io/repository/centos/centos?tab=tags
-# * Dockerfile: https://github.com/tgagor/docker-centos/blob/master/stream9/Dockerfile
+# Universal Base Image (UBI):
+# * Hub/cloud:
+#   + Home page on Docker Hub: https://hub.docker.com/_/rockylinux
+#   + '9' on Docker Hub: https://hub.docker.com/r/rockylinux/rockylinux
+# * Dockerfile:
+#   + Specific branches on https://github.com/rocky-linux/sig-cloud-instance-images
+#   + e.g., https://github.com/rocky-linux/sig-cloud-instance-images/tree/Rocky-9.3.20231119-UBI-x86_64
 #
-FROM quay.io/centos/centos:stream9
+FROM docker.io/rockylinux:9
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -20,10 +22,6 @@ ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL $LANG
-
-# Import the Centos-8 GPG key to prevent warnings
-RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official && \
-  rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
 
 # Add the repository for CodeReady Linux Builder (CRB)
 RUN dnf -y install 'dnf-command(config-manager)'
@@ -47,7 +45,7 @@ ADD resources/bashrc /root/.bashrc
 RUN dnf -y install curl-minimal --skip-broken --best --allowerasing
 RUN dnf -y install less htop net-tools bind-utils which sudo man vim \
 	git-all wget file bash-completion keyutils \
-	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf yum-utils \
+	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf dnf-utils \
 	autoconf automake libtool \
 	langtable gcc gcc-c++ cmake m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas \
