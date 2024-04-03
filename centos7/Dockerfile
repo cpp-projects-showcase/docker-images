@@ -92,26 +92,26 @@ WORKDIR $HOME
 #RUN touch $HOME/TMP_TO_BE_DELETED2
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.18
-RUN pyenv install 3.8.18 && \
-    pyenv global 3.8.18 && \
+# Python 3.8.19
+RUN pyenv install 3.8.19 && \
+    pyenv global 3.8.19 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.18"
-# Python 3.9.18
-RUN pyenv install 3.9.18 && \
-    pyenv global 3.9.18 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.19"
+# Python 3.9.19
+RUN pyenv install 3.9.19 && \
+    pyenv global 3.9.19 && \
     pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.18"
-# Python 3.10.13
-#RUN pyenv install 3.10.13 && \
-#    pyenv global 3.10.13 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.19"
+# Python 3.10.14
+#RUN pyenv install 3.10.14 && \
+#    pyenv global 3.10.14 && \
 #    pip install -U pip pipenv
-#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.13"
-# Python 3.11.8
-#RUN pyenv install 3.11.8 && \
-#    pyenv global 3.11.8 && \
+#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.14"
+# Python 3.11.9
+#RUN pyenv install 3.11.9 && \
+#    pyenv global 3.11.9 && \
 #    pip install -U pip pipenv
-#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.8"
+#RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.9"
 # Python 3.12.2
 #RUN pyenv install 3.12.2 && \
 #    pyenv global 3.12.2 && \
