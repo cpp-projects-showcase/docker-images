@@ -1,5 +1,5 @@
 #
-# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/master/centos9
+# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/centos9
 # Usual Docker tag: infrahelpers/cpppython:centos9
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
@@ -68,11 +68,12 @@ RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
 RUN dnf -y clean all
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
-RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1) && \
+RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2,2 | cut -d'"' -f1,1) && \
+	architecture=$(uname -m|sed 's/x86_/amd/') && \
+	echo "YQ_VER=${YQ_VER} - architecture=${architecture}" && \
 	curl -Ls \
-         https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_amd64 \
-         -o /usr/local/bin/yq && \
-    chmod 775 /usr/local/bin/yq
+	    https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_${architecture} -o /usr/local/bin/yq && \
+	chmod +x /usr/local/bin/yq
 
 # Create the `build` user (for the development activities)
 RUN adduser build
@@ -105,31 +106,36 @@ RUN git pull && hash -r
 WORKDIR $HOME
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.18
-RUN pyenv install 3.8.18 && \
-    pyenv global 3.8.18 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.18"
-# Python 3.9.18
-RUN pyenv install 3.9.18 && \
-    pyenv global 3.9.18 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.18"
-# Python 3.10.13
-RUN pyenv install 3.10.13 && \
-    pyenv global 3.10.13 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.13"
-# Python 3.11.8
-RUN pyenv install 3.11.8 && \
-    pyenv global 3.11.8 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.8"
-# Python 3.12.2
-RUN pyenv install 3.12.2 && \
-    pyenv global 3.12.2 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.2"
+# Python 3.8.20
+RUN pyenv install 3.8.20 && \
+    pyenv global 3.8.20 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.20"
+# Python 3.9.20
+RUN pyenv install 3.9.20 && \
+    pyenv global 3.9.20 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.20"
+# Python 3.10.15
+RUN pyenv install 3.10.15 && \
+    pyenv global 3.10.15 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.15"
+# Python 3.11.10
+RUN pyenv install 3.11.10 && \
+    pyenv global 3.11.10 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.10"
+# Python 3.12.7
+RUN pyenv install 3.12.7 && \
+    pyenv global 3.12.7 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.7"
+# Python 3.13.0
+RUN pyenv install 3.13.0 && \
+    pyenv global 3.13.0 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.0"
 
 # Entry point
 CMD ["/bin/bash"]

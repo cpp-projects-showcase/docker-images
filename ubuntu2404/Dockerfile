@@ -1,9 +1,9 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/debian11
-# Usual Docker tag: infrahelpers/cpppython:debian11
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/ubuntu2404
+# Usual Docker tag: infrahelpers/cpppython:ubuntu2404
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/debian:11
+FROM docker.io/ubuntu:24.04
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -13,17 +13,16 @@ ENV container docker
 ENV HOME /home/build
 ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
-ENV LANG4GEN en_US.utf8
 ENV LC_ALL $LANG
 
 # Update the system
 RUN echo "Europe/Paris" > /etc/timezone
 RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
 RUN apt-get -qq update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
 	apt-utils apt-transport-https \
-	ca-certificates locales locales-all tzdata sudo \
-	zip unzip gzip bzip2 xz-utils tar p7zip-full \
+	ca-certificates locales tzdata sudo \
+	zip unzip gzip bzip2 xz-utils tar unrar p7zip-full \
 	curl wget netcat net-tools bind9-host aptitude
 
 # Generate the locales
@@ -45,21 +44,21 @@ RUN apt-get -qq update && \
 	flex bison \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
-	libzmq5-dev libczmq-dev libssl-dev libffi-dev \
+	libczmq4 libczmq-dev libssl-dev libffi-dev \
 	swig graphviz libopenblas-dev
 RUN apt-get -y install libmpich-dev libopenmpi-dev \
 	sqlite3 libsqlite3-dev \
-	mariadb-client default-libmysqlclient-dev \
+	mysql-client libmysqlclient-dev \
 	postgresql-client \
 	libpqxx-dev \
 	libicu-dev libprotobuf-dev protobuf-compiler \
 	python3 libpython3-dev \
+	python3-django libapache2-mod-wsgi-py3 \
 	libgeos++-dev \
 	doxygen ghostscript texlive-latex-recommended \
 	r-base r-base-dev \
 	rake \
 	jq
-#RUN apt-get -y install python3-django libapache2-mod-wsgi-py3
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -108,7 +107,7 @@ USER build
 # Git prompt
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
-# Python Pyenv and pipenv (https://www.python.org/downloads/)
+# Python, Pyenv and pipenv (https://www.python.org/downloads/)
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 # Hack to git update $HOME/.pyenv

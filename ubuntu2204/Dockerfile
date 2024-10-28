@@ -1,5 +1,5 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/master/ubuntu2204
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/ubuntu2204
 # Usual Docker tag: infrahelpers/cpppython:ubuntu2204
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
@@ -64,11 +64,12 @@ RUN apt-get -y install libmpich-dev libopenmpi-dev \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
-RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1) && \
+RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2,2 | cut -d'"' -f1,1) && \
+	architecture=$(uname -m|sed 's/x86_/amd/') && \
+	echo "YQ_VER=${YQ_VER} - architecture=${architecture}" && \
 	curl -Ls \
-         https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_amd64 \
-         -o /usr/local/bin/yq && \
-    chmod 775 /usr/local/bin/yq
+	    https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_${architecture} -o /usr/local/bin/yq && \
+	chmod +x /usr/local/bin/yq
 
 # SOCI (https://github.com/SOCI/soci)
 RUN mkdir -p /opt/soci
@@ -115,31 +116,36 @@ RUN git pull
 WORKDIR $HOME
 
 ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-# Python 3.8.19
-RUN pyenv install 3.8.19 && \
-    pyenv global 3.8.19 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.19"
-# Python 3.9.19
-RUN pyenv install 3.9.19 && \
-    pyenv global 3.9.19 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.19"
-# Python 3.10.14
-RUN pyenv install 3.10.14 && \
-    pyenv global 3.10.14 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.14"
-# Python 3.11.9
-RUN pyenv install 3.11.9 && \
-    pyenv global 3.11.9 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.9"
-# Python 3.12.2
-RUN pyenv install 3.12.2 && \
-    pyenv global 3.12.2 && \
-    pip install -U pip pipenv
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.2"
+# Python 3.8.20
+RUN pyenv install 3.8.20 && \
+    pyenv global 3.8.20 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.20"
+# Python 3.9.20
+RUN pyenv install 3.9.20 && \
+    pyenv global 3.9.20 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.20"
+# Python 3.10.15
+RUN pyenv install 3.10.15 && \
+    pyenv global 3.10.15 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.15"
+# Python 3.11.10
+RUN pyenv install 3.11.10 && \
+    pyenv global 3.11.10 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.10"
+# Python 3.12.7
+RUN pyenv install 3.12.7 && \
+    pyenv global 3.12.7 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.7"
+# Python 3.13.0
+RUN pyenv install 3.13.0 && \
+    pyenv global 3.13.0 && \
+    pip install -U pip
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.0"
 
 # Entry point
 CMD ["/bin/bash"]

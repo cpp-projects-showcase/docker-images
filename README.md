@@ -15,16 +15,16 @@ modules need to be compiled with C++).
 Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
-[Rocky Linux 9](https://docs.rockylinux.org/release_notes/9_3/),
+[Rocky Linux 9](https://docs.rockylinux.org/release_notes/9_4/),
+[CentOS 10 Stream](https://community.centminmod.com/threads/centos-stream-10-is-released.25454/) (not officially released, as of end 2024; see also
+[CentOS Stream 10 compose artifacts](https://composes.stream.centos.org/stream-10/development/latest-CentOS-Stream/compose/BaseOS/x86_64/iso/)),
 [CentOS 9 Stream](https://blog.centos.org/2021/12/introducing-centos-stream-9/),
 [CentOS 8 Stream](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
-[CentOS 7](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS7),
+[Fedora 40](https://docs.fedoraproject.org/en-US/fedora/f40/release-notes/index.html),
 [Fedora 39](https://docs.fedoraproject.org/en-US/fedora/f39/release-notes/index.html),
-[Fedora 38](https://docs.fedoraproject.org/en-US/fedora/f38/release-notes/index.html),
-[(TBC) Ubuntu 24.04 LTS (Noble Numbat)](https://tecadmin.net/ubuntu-24-04-lts/),
+[Ubuntu 24.04 LTS (Noble Numbat)](https://releases.ubuntu.com/24.04/),
 [Ubuntu 22.04 LTS (Jammy Jellyfish)](https://releases.ubuntu.com/22.04/),
 [Ubuntu 20.04 LTS (Focal Fossa)](https://releases.ubuntu.com/20.04/),
-[Ubuntu 18.04 LTS (Bionic Beaver)](https://releases.ubuntu.com/18.04/),
 [Debian 12 (Bookworm)](https://www.debian.org/releases/bookworm/),
 and [Debian 11 (Bullseye)](https://www.debian.org/releases/bullseye/).
 
@@ -41,7 +41,7 @@ The preferred way to propose amendment of the Docker image is through
 [pull requests on the GitHub project](https://github.com/cpp-projects-showcase/docker-images/pulls).
 Once the pull request has been merged, _i.e._, once the `Dockerfile` amendment
 has been
-[committed in GitHub](https://github.com/cpp-projects-showcase/docker-images/commits/master),
+[committed in GitHub](https://github.com/cpp-projects-showcase/docker-images/commits/main),
 Docker Cloud then rebuilds the corresponding container images, which become
 available for every one to use.
 
@@ -53,9 +53,9 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`, `centos7`,
-  `fedora39`, `fedora38`, `debian12`, `debian11`,
-  `ubuntu2204`, `ubuntu2004` or `ubuntu1804`):
+  (`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`,
+  `fedora40`, `fedora39`, `debian12`, `debian11`,
+  `ubuntu2404`, `ubuntu2204`, or `ubuntu2004`):
 ```bash
 $ docker pull infrahelpers/cpppython:<linux-distrib>
 $ docker run --rm -v ~/.ssh/id_rsa:/home/build/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/home/build/.ssh/id_rsa.pub -it infrahelpers/cpppython:<linux-distrib>
@@ -111,9 +111,9 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`, `centos7`,
-  `fedora39`, `fedora38`, `debian12`, `debian11`,
-  `ubuntu2204`, `ubuntu2004` or `ubuntu1804`:
+`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`,
+`fedora40`, `fedora39`, `debian12`, `debian11`,
+`ubuntu2404`, `ubuntu2204`, or `ubuntu2004`:
 ```bash
 $ mkdir -p ~/dev
 $ cd ~/dev
