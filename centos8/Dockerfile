@@ -15,19 +15,27 @@ LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
 
 # Docker build time environment variables
-ENV container docker
-ENV HOME /home/build
-ENV LANGUAGE en_US:en
-ENV LANG en_US.UTF-8
-ENV LC_ALL $LANG
+ENV container="docker"
+ENV HOME="/home/build"
+ENV LANGUAGE="en_US:en"
+ENV LANG="en_US.UTF-8"
+ENV LC_ALL="$LANG"
 
 # Import the Centos-8 GPG key to prevent warnings
 RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official && \
   rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
 
-# Add the repository for PowerTools
+# As CentOS Stream 8 has been deprecated, the RPM repositories are now archived.
+# The following is a temporary work around. The long term solution is to upgrade
+# to CentOS Stream 9 (or soon to CentOS Stream 10)
+ADD resources/CentOS-Stream-AppStream.repo /etc/yum.repos.d/CentOS-Stream-AppStream.repo
+ADD resources/CentOS-Stream-BaseOS.repo /etc/yum.repos.d/CentOS-Stream-BaseOS.repo
+ADD resources/CentOS-Stream-Extras-common.repo /etc/yum.repos.d/CentOS-Stream-Extras-common.repo
+ADD resources/CentOS-Stream-Extras.repo /etc/yum.repos.d/CentOS-Stream-Extras.repo
+ADD resources/CentOS-Stream-PowerTools.repo etc/yum.repos.d/CentOS-Stream-PowerTools.repo 
+
+# Add the config manager
 RUN dnf -y install 'dnf-command(config-manager)'
-RUN dnf config-manager --set-enabled powertools
 
 # Add EPEL support
 RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
@@ -108,7 +116,7 @@ WORKDIR $HOME/.pyenv
 RUN git pull && hash -r
 WORKDIR $HOME
 
-ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
+ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
 # Python 3.8.20
 RUN pyenv install 3.8.20 && \
     pyenv global 3.8.20 && \

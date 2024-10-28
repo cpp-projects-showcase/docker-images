@@ -9,11 +9,11 @@ LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
 
 # Environment
-ENV container docker
-ENV HOME /home/build
-ENV LANGUAGE en_US:en
-ENV LANG en_US.UTF-8
-ENV LC_ALL $LANG
+ENV container="docker"
+ENV HOME="/home/build"
+ENV LANGUAGE="en_US:en"
+ENV LANG="en_US.UTF-8"
+ENV LC_ALL="$LANG"
 
 # Update the system
 RUN echo "Europe/Paris" > /etc/timezone
@@ -23,7 +23,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
 	apt-utils apt-transport-https \
 	ca-certificates locales tzdata sudo \
 	zip unzip gzip bzip2 xz-utils tar unrar p7zip-full \
-	curl wget netcat net-tools bind9-host aptitude
+	curl wget ncat net-tools bind9-host aptitude
 
 # Generate the locales
 RUN locale-gen $LANG && \
@@ -115,7 +115,7 @@ WORKDIR $HOME/.pyenv
 RUN git pull
 WORKDIR $HOME
 
-ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
+ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
 # Python 3.8.20
 RUN pyenv install 3.8.20 && \
     pyenv global 3.8.20 && \

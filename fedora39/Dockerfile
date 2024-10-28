@@ -9,8 +9,8 @@ LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
 
 # Docker build time environment variables
-ENV container docker
-ENV HOME /home/build
+ENV container="docker"
+ENV HOME="/home/build"
 
 # Update of Fedora and configure the locale
 RUN dnf -y upgrade && \
@@ -19,9 +19,9 @@ RUN dnf -y upgrade && \
 	localedef -f UTF-8 -i en_US en_US.UTF-8
 
 #
-ENV LANGUAGE en_US:en
-ENV LANG en_US.UTF-8
-ENV LC_ALL $LANG
+ENV LANGUAGE="en_US:en"
+ENV LANG="en_US.UTF-8"
+ENV LC_ALL="$LANG"
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
@@ -88,7 +88,7 @@ WORKDIR $HOME/.pyenv
 RUN git pull
 WORKDIR $HOME
 
-ENV PATH $HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
+ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
 # Python 3.8.20
 RUN pyenv install 3.8.20 && \
     pyenv global 3.8.20 && \
