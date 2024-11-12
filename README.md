@@ -127,8 +127,8 @@ $ docker push infrahelpers/cpppython:<linux-distrib>
 ```
 
 # TODO
-For any of the following features, an issue may be open
+Do not hestitate to create an issue
 [on GitHub](https://github.com/cpp-projects-showcase/docker-images/issues):
-1. Automate regular rebuilds (_e.g._, once a month for CentOS or Ubuntu)
+
 
 
