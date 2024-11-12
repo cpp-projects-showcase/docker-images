@@ -48,8 +48,12 @@ env:
     
 jobs:
 
-  # CentOS Stream 9
-  build_centos9_image:
+  #
+  build_and_publish_container_image:
+
+    strategy:
+      matrix:
+        os_img: [centos8, centos9, rocky9, fedora39, fedora40, debian11, debian12, ubuntu2004, ubuntu2204, ubuntu2404]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub
@@ -88,99 +92,30 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.IMAGE_NAME }}:centos9
+          images: ${{ env.IMAGE_NAME }}:${{ matrix.os_img }}
         
       - name: Run privileged
         run: sudo docker run --privileged --rm tonistiigi/binfmt --install arm64
 
       # https://github.com/docker/build-push-action
-      - name: Build CentOS Stream 9 image
-        id: docker_build_centos9
+      - name: Build image
+        id: container_build_image
         uses: docker/build-push-action@v6
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: ./centos9
-          file: ./centos9/Dockerfile
+          context: ./${{ matrix.os_img }}
+          file: ./${{ matrix.os_img }}/Dockerfile
           push: true
           provenance: mode=max
           sbom: true
           tags: |
-            ${{ env.IMAGE_NAME }}:centos9
+            ${{ env.IMAGE_NAME }}:${{ matrix.os_img }}
           # For pull requests, export results to the build cache.
           # Otherwise, push to a registry.
           # Uncomment the following 3 lines to activate the Docker Cloud builds
           #outputs: ${{ github.event_name == 'pull_request' && 'type=cacheonly' || 'type=registry' }}
-          #cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-centos9
-          #cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-centos9,mode=max
-          # Comment the following 2 lines when activating the Docker Cloud builds
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64/v8
-
-  # Rocky 9
-  build_rocky9_image:
-
-    # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
-    environment: docker-hub
-
-    runs-on: ubuntu-latest
-
-    steps:
-      # https://github.com/actions/checkout
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # https://github.com/docker/setup-qemu-action
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      # https://github.com/docker/login-action
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # https://github.com/docker/setup-buildx-action
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v3
-        # Uncomment the following to activate the Docker Cloud builds
-        #with:
-        #  version: "lab:latest"
-        #  driver: cloud
-        #  endpoint: "${{ env.ORG_NAME}}/default"
-        #  install: true
-
-      # https://github.com/docker/metadata-action
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME }}:rocky9
-        
-      - name: Run privileged
-        run: sudo docker run --privileged --rm tonistiigi/binfmt --install arm64
-
-      # https://github.com/docker/build-push-action
-      - name: Build Rocky 9 image
-        id: docker_build_rocky9
-        uses: docker/build-push-action@v6
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          context: ./rocky9
-          file: ./rocky9/Dockerfile
-          push: true
-          provenance: mode=max
-          sbom: true
-          tags: |
-            ${{ env.IMAGE_NAME }}:rocky9
-          # For pull requests, export results to the build cache.
-          # Otherwise, push to a registry.
-          # Uncomment the following 3 lines to activate the Docker Cloud builds
-          #outputs: ${{ github.event_name == 'pull_request' && 'type=cacheonly' || 'type=registry' }}
-          #cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-rocky9
-          #cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-rocky9,mode=max
+          #cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-${{ matrix.os_img }}
+          #cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-${{ matrix.os_img }},mode=max
           # Comment the following 2 lines when activating the Docker Cloud builds
           cache-from: type=gha
           cache-to: type=gha,mode=max
