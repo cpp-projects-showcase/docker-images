@@ -28,7 +28,7 @@
 # Scheduling builds
 # -----------------
 # * https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
-# * https://crontab.guru/#0_2_*_*_*
+# * https://crontab.guru/#0_2_*_*_0,2,4,6
 #
 name: Build and publish container images onto Docker Cloud
 
@@ -37,8 +37,8 @@ on:
     branches:
     - main
   schedule:
-    # Trigeer a build every day at 02:00 UTC
-    - cron: "0 2 * * *"
+    # Trigeer a build at 02:00 UTC on Sun., Tue., Thu., and Sat.
+    - cron: "0 2 * * 0,2,4,6"
   workflow_dispatch:
 
 env:
