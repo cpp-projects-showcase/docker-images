@@ -12,6 +12,10 @@ LABEL version="0.1"
 ENV container="docker"
 ENV HOME="/home/build"
 
+# Extra CA certificate
+ADD resources/ZscalerRootCertificate-2048-SHA256.crt /etc/pki/ca-trust/source/anchors/zia-ca.crt
+RUN update-ca-trust extract
+
 # Update of Fedora and configure the locale
 RUN dnf -y upgrade && \
 	dnf -y install glibc-locale-source glibc-langpack-en && \
