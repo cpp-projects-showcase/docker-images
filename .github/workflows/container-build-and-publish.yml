@@ -53,7 +53,10 @@ jobs:
     strategy:
       matrix:
         # List of base OSes
-        os_img: [centos8, centos9, rocky9, fedora39, fedora40, debian11, debian12, ubuntu2004, ubuntu2204, ubuntu2404]
+        # For some reason, as of end 2024, the automatic build of Fedora
+        # stalls. Locally, there is no issue
+        # os_img: [centos8, centos9, rocky9, fedora39, fedora40, debian11, debian12, ubuntu2004, ubuntu2204, ubuntu2404]
+        os_img: [centos8, centos9, rocky9, debian11, debian12, ubuntu2004, ubuntu2204, ubuntu2404]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub

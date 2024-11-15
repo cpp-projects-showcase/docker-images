@@ -65,6 +65,8 @@ RUN dnf -y install libicu-devel \
 	rake rubygem-rake \
 	jq
 RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
+RUN dnf -y remove ruby-default-gems || \
+	echo "ruby-default-gems was not installed. Good enough"
 RUN dnf -y clean all
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
