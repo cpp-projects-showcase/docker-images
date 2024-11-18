@@ -30,7 +30,7 @@
 # * https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 # * https://crontab.guru/#0_2_*_*_0,2,4,6
 #
-name: Build and publish container images onto Docker Cloud
+name: Build and publish RPM-based container images onto Docker Cloud
 
 on:
   schedule:
