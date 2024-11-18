@@ -1,0 +1,122 @@
+#
+# File: https://github.com/cpp-projects-showcase/docker-images/blob/main/.github/workflows/container-build-and-publish-rpm-based.yml
+# 
+# On Docker Hub:
+# * https://hub.docker.com/repository/docker/infrahelpers/cpppython/tags
+# * Usual tags on Docker Hub: infrahelpers/cpppython:base_os
+#
+# On GitHub, Dockerfiles:
+# * https://github.com/cpp-projects-showcase/docker-images/blob/main/os/*/Dockerfile
+#
+# Docker Cloud builds
+# -------------------
+# The number of build minutes are limited per month, and increasing
+# that limit is expensive. The activation of Docker Cloud builds is
+# therefore commented throughout this CI/CD pipeline.
+# References:
+# * https://docs.docker.com/build-cloud/
+# * https://docs.docker.com/build-cloud/ci/
+# * Cloud builders: https://app.docker.com/build/accounts/infrahelpers/builders
+#
+# SBOM and attestations of provenance
+# -----------------------------------
+# * https://docs.docker.com/scout/policy/#supply-chain-attestations
+# * https://docs.docker.com/build/metadata/attestations/
+#   * With GitHub Actions:
+#     https://docs.docker.com/build/ci/github-actions/attestations/
+#
+# Scheduling builds
+# -----------------
+# * https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
+# * https://crontab.guru/#0_2_*_*_0,2,4,6
+#
+name: Build and publish container images onto Docker Cloud
+
+on:
+  schedule:
+    # Trigeer a build at 02:00 UTC on Sun., Tue., Thu., and Sat.
+    - cron: "0 2 * * 0,2,4,6"
+  workflow_dispatch:
+
+env:
+  ORG_NAME: infrahelpers
+  IMAGE_NAME: infrahelpers/cpppython
+    
+jobs:
+
+  #
+  build_and_publish_container_image:
+
+    strategy:
+      matrix:
+        # List of base OSes, based on RPM packages
+        # For some reason, as of end 2024, the automatic build of Fedora
+        # stalls. Locally, there is no issue
+        os_img: [centos8, centos9, rocky9, fedora39, fedora40]
+
+    # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
+    environment: docker-hub
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      # https://github.com/docker/login-action
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+        # Uncomment the following to activate the Docker Cloud builds
+        #with:
+        #  version: "lab:latest"
+        #  driver: cloud
+        #  endpoint: "${{ env.ORG_NAME}}/default"
+        #  install: true
+
+      # https://github.com/docker/metadata-action
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_NAME }}:${{ matrix.os_img }}
+        
+      - name: Run privileged
+        run: sudo docker run --privileged --rm tonistiigi/binfmt --install arm64
+
+      # https://github.com/docker/build-push-action
+      - name: Build image
+        id: container_build_image
+        uses: docker/build-push-action@v6
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: ./os/${{ matrix.os_img }}
+          file: ./os/${{ matrix.os_img }}/Dockerfile
+          push: true
+          provenance: mode=max
+          sbom: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ matrix.os_img }}
+          # For pull requests, export results to the build cache.
+          # Otherwise, push to a registry.
+          # Uncomment the following 3 lines to activate the Docker Cloud builds
+          #outputs: ${{ github.event_name == 'pull_request' && 'type=cacheonly' || 'type=registry' }}
+          #cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-${{ matrix.os_img }}
+          #cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:build-cache-${{ matrix.os_img }},mode=max
+          # Comment the following 2 lines when activating the Docker Cloud builds
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64/v8
+
