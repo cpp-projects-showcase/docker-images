@@ -58,12 +58,8 @@ jobs:
     environment: docker-hub
 
     runs-on: ubuntu-latest
-    container: fedora:40
 
     steps:
-      - name: Distrib check
-        run: cat /etc/os-release
-
       # https://github.com/actions/checkout
       - name: Checkout
         uses: actions/checkout@v4
