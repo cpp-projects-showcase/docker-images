@@ -33,6 +33,8 @@
 name: Build and publish Fedora-based container images onto Docker Cloud
 
 on:
+  # For some reason, Fedora build times out (after 6 hours)
+  # while installing several instances/versions of Python
   schedule:
     # Trigeer a build at 14:00 UTC on Sun., Tue., Thu., and Sat.
     - cron: "0 14 * * 0,2,4,6"
