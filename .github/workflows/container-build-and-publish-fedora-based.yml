@@ -54,7 +54,7 @@ jobs:
         # List of base OSes, based on RPM packages
         # For some reason, as of end 2024, the automatic build of Fedora
         # stalls. Locally, there is no issue
-        os_img: [fedora39, fedora40]
+        os_img: [fedora41, fedora40]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub

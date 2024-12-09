@@ -20,8 +20,8 @@ The supported Linux distributions are
 [CentOS Stream 10 compose artifacts](https://composes.stream.centos.org/stream-10/development/latest-CentOS-Stream/compose/BaseOS/x86_64/iso/)),
 [CentOS 9 Stream](https://blog.centos.org/2021/12/introducing-centos-stream-9/),
 [CentOS 8 Stream](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
+[Fedora 41](https://docs.fedoraproject.org/en-US/fedora/f41/release-notes/index.html),
 [Fedora 40](https://docs.fedoraproject.org/en-US/fedora/f40/release-notes/index.html),
-[Fedora 39](https://docs.fedoraproject.org/en-US/fedora/f39/release-notes/index.html),
 [Ubuntu 24.04 LTS (Noble Numbat)](https://releases.ubuntu.com/24.04/),
 [Ubuntu 22.04 LTS (Jammy Jellyfish)](https://releases.ubuntu.com/22.04/),
 [Ubuntu 20.04 LTS (Focal Fossa)](https://releases.ubuntu.com/20.04/),
@@ -54,7 +54,7 @@ available for every one to use.
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
   (`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`,
-  `fedora40`, `fedora39`, `debian12`, `debian11`,
+  `fedora41`, `fedora40`, `debian12`, `debian11`,
   `ubuntu2404`, `ubuntu2204`, or `ubuntu2004`):
 ```bash
 $ docker pull infrahelpers/cpppython:<linux-distrib>
@@ -112,7 +112,7 @@ Resolving deltas: 100% (3665/3665), done.
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
 `<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`,
-`fedora40`, `fedora39`, `debian12`, `debian11`,
+`fedora41`, `fedora40`, `debian12`, `debian11`,
 `ubuntu2404`, `ubuntu2204`, or `ubuntu2004`:
 ```bash
 $ mkdir -p ~/dev
