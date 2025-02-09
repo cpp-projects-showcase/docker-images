@@ -89,11 +89,11 @@ RUN git pull
 WORKDIR $HOME
 
 ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
-# Python 3.13.1
-RUN pyenv install 3.13.1 && \
-    pyenv global 3.13.1 && \
+# Python 3.13.2
+RUN pyenv install 3.13.2 && \
+    pyenv global 3.13.2 && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.1"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.2"
 
 # Entry point
 CMD ["/bin/bash"]
