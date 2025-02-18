@@ -1,12 +1,12 @@
 #
-# File: https://github.com/cpp-projects-showcase/docker-images/blob/main/.github/workflows/container-build-and-publish-deb-based.yml
+# File: https://github.com/cpp-projects-showcase/docker-images/blob/main/.github/workflows/container-build-and-publish-ubuntu-based.yml
 # 
 # On Docker Hub:
 # * https://hub.docker.com/repository/docker/infrahelpers/cpppython/tags
 # * Usual tags on Docker Hub: infrahelpers/cpppython:base_os
 #
 # On GitHub, Dockerfiles:
-# * https://github.com/cpp-projects-showcase/docker-images/blob/main/os/debian*/Dockerfile
+# * https://github.com/cpp-projects-showcase/docker-images/blob/main/os/ubuntu*/Dockerfile
 #
 # Docker Cloud builds
 # -------------------
@@ -28,14 +28,14 @@
 # Scheduling builds
 # -----------------
 # * https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
-# * https://crontab.guru/#0_8_*_*_0,2,4,6
+# * https://crontab.guru/#0_11_*_*_0,2,4,6
 #
-name: Build and publish Debian-based container images onto Docker Cloud
+name: Build and publish Ubuntu-based container images onto Docker Cloud
 
 on:
   schedule:
-    # Trigeer a build at 08:00 UTC on Sun., Tue., Thu., and Sat.
-    - cron: "0 8 * * 0,2,4,6"
+    # Trigeer a build at 11:00 UTC on Sun., Tue., Thu., and Sat.
+    - cron: "0 11 * * 0,2,4,6"
   workflow_dispatch:
 
 env:
@@ -49,8 +49,8 @@ jobs:
 
     strategy:
       matrix:
-        # List of base OSes, based on Debian and/or Deb packages
-        os_img: [debian11, debian12]
+        # List of base OSes, based on Ubuntu packages
+        os_img: [ubuntu2004, ubuntu2204, ubuntu2404]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub
