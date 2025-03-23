@@ -67,7 +67,7 @@ RUN curl -kL https://apt.kitware.com/keys/kitware-archive-latest.asc | \
 	tee /usr/share/keyrings/kitware-archive-keyring.gpg > /dev/null && \
 	echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | \
 	tee /etc/apt/sources.list.d/kitware.list > /dev/null && \
-	apt-get update && apt-get -y upgrade
+	apt-get update && apt-get -y install cmake
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
 RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2,2 | cut -d'"' -f1,1) && \
