@@ -33,35 +33,41 @@ RUN locale-gen $LANG && \
 RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -qq update && \
-    apt-get -y install procps less htop screen \
-	git keychain gettext-base gawk \
-	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
-	zlib1g-dev libbz2-dev \
-	lsb-release libgmp-dev \
-	gcc g++ cppcheck clang cmake manpages patch pkg-config \
-	m4 autoconf automake libtool libltdl-dev build-essential \
-	flex bison \
-	libboost-all-dev libxapian-dev \
-	libreadline-dev libncurses5-dev \
-	libzmqpp-dev libzmq3-dev libczmq-dev libssl-dev libffi-dev \
-	swig graphviz libopenblas-dev
-RUN apt-get -y install libmpich-dev libopenmpi-dev \
-	sqlite3 libsqlite3-dev \
-	mariadb-client libmariadbclient-dev \
-	postgresql-client \
-	libpqxx-dev \
-	libicu-dev libprotobuf-dev protobuf-compiler \
-	python3 libpython3-dev \
-	libgeos++-dev \
-	doxygen ghostscript texlive-latex-recommended \
-	r-base r-base-dev \
-	rake \
-	jq
+RUN apt-get -qq update && apt-get -y upgrade
+RUN apt-get -y install procps less htop screen
+RUN apt-get -y install git keychain gettext-base gawk
+RUN apt-get -y install bash-completion vim-nox emacs-nox apt-utils keyutils ftp
+RUN apt-get -y install zlib1g-dev libbz2-dev lsb-release libgmp-dev
+RUN apt-get -y install gcc g++ cppcheck clang manpages patch pkg-config
+RUN apt-get -y install m4 autoconf automake libtool libltdl-dev build-essential
+RUN apt-get -y install flex bison
+RUN apt-get -y install libboost-all-dev libxapian-dev
+RUN apt-get -y install libreadline-dev libncurses5-dev
+RUN apt-get -y install libzmqpp-dev libzmq3-dev libczmq-dev
+RUN apt-get -y install libssl-dev libffi-dev
+RUN apt-get -y install swig graphviz libopenblas-dev
+RUN apt-get -y install libmpich-dev libopenmpi-dev
+RUN apt-get -y install sqlite3 libsqlite3-dev
+RUN apt-get -y install mariadb-client libmariadbclient-dev
+RUN apt-get -y install postgresql-client libpqxx-dev
+RUN apt-get -y install libicu-dev libprotobuf-dev protobuf-compiler
+RUN apt-get -y install python3 libpython3-dev
+RUN apt-get -y install libgeos++-dev
+RUN apt-get -y install doxygen ghostscript texlive-latex-recommended
+RUN apt-get -y install r-base r-base-dev rake
+RUN apt-get -y install jq
 #RUN apt-get -y install python3-django libapache2-mod-wsgi-py3
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# CMake (for Ubuntu LTS: https://apt.kitware.com/)
+RUN curl -kL https://apt.kitware.com/keys/kitware-archive-latest.asc | \
+	gpg --dearmor - | \
+	tee /usr/share/keyrings/kitware-archive-keyring.gpg > /dev/null && \
+	echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | \
+	tee /etc/apt/sources.list.d/kitware.list > /dev/null && \
+	apt-get update && apt-get -y upgrade
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
 RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest | grep 'tag_name' | cut -d'v' -f2,2 | cut -d'"' -f1,1) && \
@@ -73,16 +79,14 @@ RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest 
 
 # SOCI (https://github.com/SOCI/soci)
 RUN mkdir -p /opt/soci
-ADD resources/soci-debian-cmake.patch /opt/soci/soci-debian-cmake.patch
 RUN SOCI_VER=$(curl -Ls https://api.github.com/repos/SOCI/soci/tags|jq -r '.[].name'|grep "^v"|sort -r|head -1|cut -d'v' -f2,2) && \
 	curl -Ls \
          https://github.com/SOCI/soci/archive/refs/tags/v${SOCI_VER}.tar.gz \
          -o /opt/soci/soci-${SOCI_VER}.tar.gz && cd /opt/soci && \
     tar zxf soci-${SOCI_VER}.tar.gz && rm -f soci-${SOCI_VER}.tar.gz && \
-    cd soci-${SOCI_VER} && patch -p1 < ../soci-debian-cmake.patch && \
-    mkdir -p build && cd build && \
+    cd soci-${SOCI_VER} && mkdir -p build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
-          -DSOCI_CXX11=ON -DSOCI_TESTS=OFF .. && \
+          -DSOCI_TESTS=OFF .. && \
     make install
 
 # Create the `build` user (for the development activities)
