@@ -1,9 +1,9 @@
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/fedora41
-# Usual Docker tag: infrahelpers/cpppython:fedora41
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/fedora42
+# Usual Docker tag: infrahelpers/cpppython:fedora42
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM fedora:41
+FROM fedora:42
 
 LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
@@ -29,7 +29,7 @@ ADD resources/bashrc /root/.bashrc
 # Basic, C++ and Python packages
 RUN dnf -y upgrade && \
 	dnf -y install less htop net-tools bind-utils which sudo man vim \
-	git-all wget curl file bash-completion keyutils \
+	git-all wget curl file bash-completion keyutils awk \
 	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
 	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
@@ -40,8 +40,11 @@ RUN dnf -y upgrade && \
 RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
 	python3-mod_wsgi \
 	python3 python3-devel \
-	python3.8 python3.9 \
-	python3.10 python3.10-devel python3.12 python3.12-devel \
+	python3.9 \
+	python3.10 python3.10-devel \
+	python3.11 python3.11-devel \
+	python3.12 python3.12-devel \
+	python3.13 python3.13-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
 	R-devel \
