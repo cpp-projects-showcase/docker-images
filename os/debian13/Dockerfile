@@ -1,10 +1,9 @@
-
 #
-# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/ubuntu2404
-# Usual Docker tag: infrahelpers/cpppython:ubuntu2404
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/debian13
+# Usual Docker tag: infrahelpers/cpppython:debian13
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-FROM docker.io/ubuntu:24.04
+FROM docker.io/debian:13
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -20,11 +19,11 @@ ENV LC_ALL="$LANG"
 RUN echo "Europe/Paris" > /etc/timezone
 RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
 RUN apt-get -qq update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends \
 	apt-utils apt-transport-https \
-	ca-certificates locales tzdata sudo \
-	zip unzip gzip bzip2 xz-utils tar unrar p7zip-full \
-	curl wget ncat net-tools bind9-host aptitude
+	ca-certificates locales locales-all tzdata sudo \
+	zip unzip gzip bzip2 xz-utils tar p7zip-full \
+	curl wget netcat-traditional net-tools bind9-host aptitude
 
 # Generate the locales
 RUN locale-gen $LANG && \
@@ -34,32 +33,29 @@ RUN locale-gen $LANG && \
 RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Basic, C++ and Python packages
-RUN apt-get -qq update && \
-    apt-get -y install procps less htop screen \
-	git keychain gettext-base gawk \
-	bash-completion vim-nox emacs-nox apt-utils keyutils ftp \
-	zlib1g-dev libbz2-dev \
-	lsb-release libgmp-dev \
-	gcc g++ cppcheck clang cmake manpages patch pkg-config \
-	m4 autoconf automake libtool libltdl-dev build-essential \
-	flex bison \
-	libboost-all-dev libxapian-dev \
-	libreadline-dev libncurses5-dev \
-	libczmq4 libczmq-dev libssl-dev libffi-dev \
-	swig graphviz libopenblas-dev
-RUN apt-get -y install libmpich-dev libopenmpi-dev \
-	sqlite3 libsqlite3-dev \
-	mysql-client libmysqlclient-dev \
-	postgresql-client \
-	libpqxx-dev \
-	libicu-dev libprotobuf-dev protobuf-compiler \
-	python3 libpython3-dev \
-	python3-django libapache2-mod-wsgi-py3 \
-	libgeos++-dev \
-	doxygen ghostscript texlive-latex-recommended \
-	r-base r-base-dev \
-	rake \
-	jq
+RUN apt-get -qq update
+RUN	apt-get -y install procps less htop screen
+RUN	apt-get -y install git keychain gettext-base gawk
+RUN	apt-get -y install bash-completion vim-nox emacs-nox apt-utils keyutils
+RUN	apt-get -y install ftp zlib1g-dev libbz2-dev checkinstall
+RUN	apt-get -y install lsb-release libgmp-dev
+RUN	apt-get -y install gcc g++ cppcheck clang cmake manpages patch pkg-config
+RUN	apt-get -y install m4 autoconf automake libtool libltdl-dev build-essential
+RUN	apt-get -y install flex bison
+RUN	apt-get -y install libboost-all-dev libxapian-dev
+RUN	apt-get -y install libreadline-dev libncurses5-dev
+RUN	apt-get -y install libzmq5-dev libczmq-dev libssl-dev libffi-dev
+RUN	apt-get -y install swig graphviz libopenblas-dev
+RUN apt-get -y install libmpich-dev libopenmpi-dev
+RUN	apt-get -y install sqlite3 libsqlite3-dev
+RUN	apt-get -y install mariadb-client default-libmysqlclient-dev
+RUN	apt-get -y install postgresql-client libpqxx-dev
+RUN	apt-get -y install libicu-dev libprotobuf-dev protobuf-compiler
+RUN	apt-get -y install python3 libpython3-dev python3-django
+RUN	apt-get -y install libapache2-mod-wsgi-py3
+RUN	apt-get -y install doxygen ghostscript texlive-latex-recommended
+RUN	apt-get -y install r-base r-base-dev rake
+RUN	apt-get -y install jq libgeos++-dev
 
 # Cleaning
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -106,7 +102,7 @@ USER build
 # Git prompt
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
-# Python, Pyenv and pipenv (https://www.python.org/downloads/)
+# Python Pyenv and pipenv (https://www.python.org/downloads/)
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 # Hack to git update $HOME/.pyenv

@@ -50,7 +50,7 @@ jobs:
     strategy:
       matrix:
         # List of base OSes, based on Debian and/or Deb packages
-        os_img: [debian11, debian12]
+        os_img: [debian12, debian13]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub

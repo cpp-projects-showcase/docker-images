@@ -108,36 +108,31 @@ RUN git pull && hash -r
 WORKDIR $HOME
 
 ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
-# Python 3.8.20
-RUN pyenv install 3.8.20 && \
-    pyenv global 3.8.20 && \
+# Python 3.9.24
+RUN pyenv install 3.9.24 && \
+    pyenv global 3.9.24 && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.8.20"
-# Python 3.9.23
-RUN pyenv install 3.9.23 && \
-    pyenv global 3.9.23 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.24"
+# Python 3.10.19
+RUN pyenv install 3.10.19 && \
+    pyenv global 3.10.19 && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.23"
-# Python 3.10.18
-RUN pyenv install 3.10.18 && \
-    pyenv global 3.10.18 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.19"
+# Python 3.11.14
+RUN pyenv install 3.11.14 && \
+    pyenv global 3.11.14 && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.18"
-# Python 3.11.13
-RUN pyenv install 3.11.13 && \
-    pyenv global 3.11.13 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.14"
+# Python 3.12.12
+RUN pyenv install 3.12.12 && \
+    pyenv global 3.12.12 && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.13"
-# Python 3.12.11
-RUN pyenv install 3.12.11 && \
-    pyenv global 3.12.11 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.12"
+# Python 3.13.8
+RUN pyenv install 3.13.8 && \
+    pyenv global 3.13.8 && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.11"
-# Python 3.13.5
-RUN pyenv install 3.13.5 && \
-    pyenv global 3.13.5 && \
-    pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.5"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.8"
 
 # Entry point
 CMD ["/bin/bash"]
