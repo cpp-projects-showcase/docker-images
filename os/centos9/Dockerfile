@@ -1,3 +1,4 @@
+
 #
 # Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/centos9
 # Usual Docker tag: infrahelpers/cpppython:centos9
@@ -108,16 +109,6 @@ RUN git pull && hash -r
 WORKDIR $HOME
 
 ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
-# Python 3.9.24
-RUN pyenv install 3.9.24 && \
-    pyenv global 3.9.24 && \
-    pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.9.24"
-# Python 3.10.19
-RUN pyenv install 3.10.19 && \
-    pyenv global 3.10.19 && \
-    pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.10.19"
 # Python 3.11.14
 RUN pyenv install 3.11.14 && \
     pyenv global 3.11.14 && \
@@ -128,11 +119,11 @@ RUN pyenv install 3.12.12 && \
     pyenv global 3.12.12 && \
     pip install -U pip
 RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.12"
-# Python 3.13.8
-RUN pyenv install 3.13.8 && \
-    pyenv global 3.13.8 && \
+# Python 3.13.9
+RUN pyenv install 3.13.9 && \
+    pyenv global 3.13.9 && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.8"
+RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.9"
 
 # Entry point
 CMD ["/bin/bash"]
