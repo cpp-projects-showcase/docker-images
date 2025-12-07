@@ -1,69 +1,55 @@
 #
-# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/rocky9
-# Usual Docker tag: infrahelpers/cpppython:rocky9
+# Dockerfile: http://github.com/cpp-projects-showcase/docker-images/tree/main/fedora43
+# Usual Docker tag: infrahelpers/cpppython:fedora43
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-# Universal Base Image (UBI):
-# * Hub/cloud:
-#   + Home page on Docker Hub: https://hub.docker.com/_/rockylinux
-#   + '9' on Docker Hub: https://hub.docker.com/r/rockylinux/rockylinux
-# * Dockerfile:
-#   + Specific branches on https://github.com/rocky-linux/sig-cloud-instance-images
-#   + e.g., https://github.com/rocky-linux/sig-cloud-instance-images/tree/Rocky-9.6.20250531-UBI-x86_64
-#
-FROM docker.io/rockylinux:9
+FROM fedora:43
 
-LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
+LABEL authors="Christophe Gattardi <christophe.gattardi+docker@gmail.com>"
 LABEL version="0.1"
 
 # Docker build time environment variables
 ENV container="docker"
 ENV HOME="/home/build"
+
+# Update of Fedora and configure the locale
+RUN dnf -y upgrade && \
+	dnf -y install glibc-locale-source glibc-langpack-en && \
+	dnf -y clean all && \
+	localedef -f UTF-8 -i en_US en_US.UTF-8
+
+#
 ENV LANGUAGE="en_US:en"
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL="$LANG"
-
-# Add the repository for CodeReady Linux Builder (CRB)
-RUN dnf -y install 'dnf-command(config-manager)'
-RUN dnf config-manager --set-enabled crb
-
-# Add EPEL support
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-
-# Update of CentOS
-RUN dnf -y clean all && \
-    dnf -y upgrade || echo "Issue with upgrade; fine for now"
-
-# Configure the locale
-RUN dnf -y install glibc-locale-source glibc-langpack-en && \
-	localedef -f UTF-8 -i en_US $LANG
 
 # Environment for the `root` user
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN dnf -y install curl-minimal --skip-broken --best --allowerasing
-RUN dnf -y install less htop net-tools bind-utils which sudo man vim \
-	git-all wget file bash-completion keyutils \
-	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf dnf-utils \
-	autoconf automake libtool \
-	langtable gcc gcc-c++ cmake m4 cppunit-devel \
-	zeromq-devel czmq-devel cppzmq-devel openblas \
-	boost-devel boost-devel \
-	xapian-core-libs xapian-bindings openssl-devel libffi-devel \
+RUN dnf -y upgrade && \
+	dnf -y install less htop net-tools bind-utils which sudo man vim \
+	git-all wget curl file bash-completion keyutils awk \
+	zlib-devel bzip2-devel gzip tar patch rpmconf yum-utils \
+	langtable gcc gcc-c++ cmake cmake3 m4 cppunit-devel \
+	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
+	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
 	readline-devel sqlite-devel mysql-devel \
 	soci-mysql-devel soci-sqlite3-devel
-RUN dnf -y install libicu-devel \
-	protobuf protobuf-c python3-protobuf \
-	python python-devel \
+RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
 	python3-mod_wsgi \
+	python3 python3-devel \
+	python3.9 \
+	python3.10 python3.10-devel \
+	python3.11 python3.11-devel \
+	python3.12 python3.12-devel \
+	python3.13 python3.13-devel \
 	geos-devel \
 	graphviz ghostscript doxygen \
-	rake rubygem-rake \
+	R-devel \
+	rubygem-rake \
 	jq
-RUN dnf -y remove ruby-default-gems || \
-	echo "ruby-default-gems was not installed. Good enough"
 RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
 RUN dnf -y clean all
 
@@ -102,20 +88,10 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 # Hack to git update $HOME/.pyenv
 WORKDIR $HOME/.pyenv
-RUN git pull && hash -r
+RUN git pull
 WORKDIR $HOME
 
 ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
-# Python 3.11.14
-RUN pyenv install 3.11.14 && \
-    pyenv global 3.11.14 && \
-    pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.14"
-# Python 3.12.12
-RUN pyenv install 3.12.12 && \
-    pyenv global 3.12.12 && \
-    pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.12"
 # Python 3.13.11
 RUN pyenv install 3.13.11 && \
     pyenv global 3.13.11 && \
@@ -124,5 +100,3 @@ RUN pyenv global system || echo "No default system version of Python. Sticking t
 
 # Entry point
 CMD ["/bin/bash"]
-
-

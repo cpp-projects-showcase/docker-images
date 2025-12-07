@@ -15,18 +15,18 @@ modules need to be compiled with C++).
 Some basic support for [R](http://r-project.org) is also provided.
 
 The supported Linux distributions are
-[Rocky Linux 9](https://docs.rockylinux.org/release_notes/9_4/),
-[CentOS 10 Stream](https://community.centminmod.com/threads/centos-stream-10-is-released.25454/) (not officially released, as of end 2024; see also
-[CentOS Stream 10 compose artifacts](https://composes.stream.centos.org/stream-10/development/latest-CentOS-Stream/compose/BaseOS/x86_64/iso/)),
+[Rocky Linux 10](https://docs.rockylinux.org/release_notes/10_1/),
+[Rocky Linux 9](https://docs.rockylinux.org/release_notes/9_7/),
+[CentOS 10 Stream](https://www.centos.org/centos10/),
 [CentOS 9 Stream](https://blog.centos.org/2021/12/introducing-centos-stream-9/),
-[CentOS 8 Stream](https://wiki.centos.org/Manuals/ReleaseNotes/CentOS8.2004),
-[Fedora 41](https://docs.fedoraproject.org/en-US/fedora/f41/release-notes/index.html),
-[Fedora 40](https://docs.fedoraproject.org/en-US/fedora/f40/release-notes/index.html),
+[CentOS 8 Stream](https://www.centos.org/centos-stream/),
+[Fedora 43](https://docs.fedoraproject.org/en-US/fedora/f43/release-notes/index.html),
+[Fedora 42](https://docs.fedoraproject.org/en-US/fedora/f42/release-notes/index.html),
 [Ubuntu 24.04 LTS (Noble Numbat)](https://releases.ubuntu.com/24.04/),
 [Ubuntu 22.04 LTS (Jammy Jellyfish)](https://releases.ubuntu.com/22.04/),
 [Ubuntu 20.04 LTS (Focal Fossa)](https://releases.ubuntu.com/20.04/),
-[Debian 12 (Bookworm)](https://www.debian.org/releases/bookworm/),
-and [Debian 11 (Bullseye)](https://www.debian.org/releases/bullseye/).
+[Debian 13 (Trixie)](https://www.debian.org/releases/trixie/)
+and [Debian 12 (Bookworm)](https://www.debian.org/releases/bookworm/).
 
 Every time some changes are committed on the
 [project's GitHub repository](https://github.com/cpp-projects-showcase/docker-images),
@@ -53,8 +53,8 @@ available for every one to use.
 
 # Using the pre-built development images
 * Start the Docker container featuring the target Linux distribution
-  (`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`,
-  `fedora41`, `fedora40`, `debian12`, `debian11`,
+  (`<linux-distrib>` may be one of `rocky10`, `rocky9`, `centos9`, `centos8`,
+  `fedora43`, `fedora42`, `debian13`, `debian12`,
   `ubuntu2404`, `ubuntu2204`, or `ubuntu2004`):
 ```bash
 $ docker pull infrahelpers/cpppython:<linux-distrib>
@@ -111,8 +111,8 @@ Resolving deltas: 100% (3665/3665), done.
 
 # Customize a Docker Image
 The images may be customized, and pushed to Docker Cloud;
-`<linux-distrib>` may be one of `rocky9`, `centos9`, `centos8`,
-`fedora41`, `fedora40`, `debian12`, `debian11`,
+`<linux-distrib>` may be one of `rocky10`, `rocky9`, `centos9`, `centos8`,
+`fedora43`, `fedora42`, `debian13`, `debian12`,
 `ubuntu2404`, `ubuntu2204`, or `ubuntu2004`:
 ```bash
 $ mkdir -p ~/dev

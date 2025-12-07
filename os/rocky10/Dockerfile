@@ -1,17 +1,17 @@
 #
-# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/rocky9
-# Usual Docker tag: infrahelpers/cpppython:rocky9
+# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/rocky10
+# Usual Docker tag: infrahelpers/cpppython:rocky10
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
 # Universal Base Image (UBI):
 # * Hub/cloud:
 #   + Home page on Docker Hub: https://hub.docker.com/_/rockylinux
-#   + '9' on Docker Hub: https://hub.docker.com/r/rockylinux/rockylinux
+#   + '10' on Docker Hub: https://hub.docker.com/r/rockylinux/rockylinux
 # * Dockerfile:
 #   + Specific branches on https://github.com/rocky-linux/sig-cloud-instance-images
 #   + e.g., https://github.com/rocky-linux/sig-cloud-instance-images/tree/Rocky-9.6.20250531-UBI-x86_64
 #
-FROM docker.io/rockylinux:9
+FROM docker.io/rockylinux:10
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -28,7 +28,7 @@ RUN dnf -y install 'dnf-command(config-manager)'
 RUN dnf config-manager --set-enabled crb
 
 # Add EPEL support
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
 
 # Update of CentOS
 RUN dnf -y clean all && \

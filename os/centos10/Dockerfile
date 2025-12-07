@@ -1,17 +1,16 @@
+
 #
-# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/rocky9
-# Usual Docker tag: infrahelpers/cpppython:rocky9
+# Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/centos10
+# Usual Docker tag: infrahelpers/cpppython:centos10
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-# Universal Base Image (UBI):
-# * Hub/cloud:
-#   + Home page on Docker Hub: https://hub.docker.com/_/rockylinux
-#   + '9' on Docker Hub: https://hub.docker.com/r/rockylinux/rockylinux
-# * Dockerfile:
-#   + Specific branches on https://github.com/rocky-linux/sig-cloud-instance-images
-#   + e.g., https://github.com/rocky-linux/sig-cloud-instance-images/tree/Rocky-9.6.20250531-UBI-x86_64
+# Base image:
+# * Hub/cloud: 'stream10' on
+#   + Docker.io: https://hub.docker.com/r/tgagor/centos-stream 
+#   + Quay.io: https://quay.io/repository/centos/centos?tab=tags
+# * Dockerfile: https://github.com/tgagor/docker-centos/blob/master/Dockerfile
 #
-FROM docker.io/rockylinux:9
+FROM quay.io/centos/centos:stream10
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -23,12 +22,16 @@ ENV LANGUAGE="en_US:en"
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL="$LANG"
 
+# Import the Centos-8 GPG key to prevent warnings
+RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official && \
+  rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Testing
+
 # Add the repository for CodeReady Linux Builder (CRB)
 RUN dnf -y install 'dnf-command(config-manager)'
 RUN dnf config-manager --set-enabled crb
 
 # Add EPEL support
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
 
 # Update of CentOS
 RUN dnf -y clean all && \
@@ -45,7 +48,7 @@ ADD resources/bashrc /root/.bashrc
 RUN dnf -y install curl-minimal --skip-broken --best --allowerasing
 RUN dnf -y install less htop net-tools bind-utils which sudo man vim \
 	git-all wget file bash-completion keyutils \
-	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf dnf-utils \
+	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf yum-utils \
 	autoconf automake libtool \
 	langtable gcc gcc-c++ cmake m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas \
@@ -62,9 +65,9 @@ RUN dnf -y install libicu-devel \
 	graphviz ghostscript doxygen \
 	rake rubygem-rake \
 	jq
+RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
 RUN dnf -y remove ruby-default-gems || \
 	echo "ruby-default-gems was not installed. Good enough"
-RUN dnf -y install "tex(latex)" texlive-epstopdf-bin
 RUN dnf -y clean all
 
 # yq, the YAML CLI utility like jq, for YAML (https://github.com/mikefarah/yq)
