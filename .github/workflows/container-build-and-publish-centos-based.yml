@@ -1,5 +1,5 @@
 #
-# File: https://github.com/cpp-projects-showcase/docker-images/blob/main/.github/workflows/container-build-and-publish-fedora-based.yml
+# File: https://github.com/cpp-projects-showcase/docker-images/blob/main/.github/workflows/container-build-and-publish-centos-based.yml
 # 
 # On Docker Hub:
 # * https://hub.docker.com/repository/docker/infrahelpers/cpppython/tags
@@ -28,16 +28,14 @@
 # Scheduling builds
 # -----------------
 # * https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
-# * https://crontab.guru/#0_14_*_*_0,2,4,6
+# * https://crontab.guru/#0_2_*_*_0,2,4,6
 #
-name: Build and publish Fedora-based container images onto Docker Cloud
+name: Build and publish CentOS-based container images onto Docker Cloud
 
 on:
-  # For some reason, Fedora build times out (after 6 hours)
-  # while installing several instances/versions of Python
   schedule:
-    # Trigeer a build at 14:00 UTC on Sun., Tue., Thu., and Sat.
-    - cron: "0 14 * * 0,2,4,6"
+    # Trigeer a build at 02:00 UTC on Sun., Tue., Thu., and Sat.
+    - cron: "0 2 * * 0,2,4,6"
   workflow_dispatch:
 
 env:
@@ -51,8 +49,9 @@ jobs:
 
     strategy:
       matrix:
-        # List of base OSes, based on RPM packages
-        os_img: [fedora42, fedora43]
+        # List of base OSes, based on RPM packages. Fedora-based builds are
+        # managed in a dedicated pipeline
+        os_img: [centos8, centos9, centos10]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub
