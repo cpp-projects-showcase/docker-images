@@ -35,8 +35,8 @@ RUN dnf -y upgrade && \
 	zeromq-devel czmq-devel cppzmq-devel openblas-devel \
 	boost-devel xapian-core-devel openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
-	readline-devel sqlite-devel mysql-devel \
-	soci-mysql-devel soci-sqlite3-devel
+	readline-devel sqlite-devel \
+	mariadb-connector-c-devel soci-mysql-devel soci-sqlite3-devel
 RUN dnf -y install libicu-devel protobuf-devel protobuf-compiler \
 	python3-mod_wsgi \
 	python3 python3-devel \
