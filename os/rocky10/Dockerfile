@@ -11,7 +11,8 @@
 #   + Specific branches on https://github.com/rocky-linux/sig-cloud-instance-images
 #   + e.g., https://github.com/rocky-linux/sig-cloud-instance-images/tree/Rocky-9.6.20250531-UBI-x86_64
 #
-FROM docker.io/rockylinux:10
+# FROM docker.io/rockylinux:10
+FROM docker.io/rockylinux/rockylinux:10.1.20251123
 
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
@@ -42,26 +43,30 @@ RUN dnf -y install glibc-locale-source glibc-langpack-en && \
 ADD resources/bashrc /root/.bashrc
 
 # Basic, C++ and Python packages
-RUN dnf -y install curl-minimal --skip-broken --best --allowerasing
-RUN dnf -y install less htop net-tools bind-utils which sudo man vim \
+RUN dnf -y install curl-minimal
+RUN dnf -y install less htop net-tools bind-utils which sudo man \
 	git-all wget file bash-completion keyutils \
 	zlib-devel bzip2-devel xz-devel gzip tar patch rpmconf dnf-utils \
 	autoconf automake libtool \
 	langtable gcc gcc-c++ cmake m4 cppunit-devel \
 	zeromq-devel czmq-devel cppzmq-devel openblas \
-	boost-devel boost-devel \
-	xapian-core-libs xapian-bindings openssl-devel libffi-devel \
+	boost-devel boost-python3-devel boost-mpich-python3 boost-openmpi-python3 \
+	xapian-core-libs \
+	openssl-devel libffi-devel \
 	mpich-devel openmpi-devel \
-	readline-devel sqlite-devel mysql-devel \
-	soci-mysql-devel soci-sqlite3-devel
+	readline-devel sqlite-devel \
+	mariadb-connector-c-devel
+# Soon to be released:
+# xapian-bindings soci-mysql-devel soci-sqlite3-devel soci-postgresql-devel
 RUN dnf -y install libicu-devel \
-	protobuf protobuf-c python3-protobuf \
+	protobuf-devel protobuf-compiler python3-protobuf \
 	python python-devel \
 	python3-mod_wsgi \
 	geos-devel \
-	graphviz ghostscript doxygen \
+	graphviz doxygen \
 	rake rubygem-rake \
 	jq
+# ghostscript
 RUN dnf -y remove ruby-default-gems || \
 	echo "ruby-default-gems was not installed. Good enough"
 RUN dnf -y install "tex(latex)" texlive-epstopdf-bin

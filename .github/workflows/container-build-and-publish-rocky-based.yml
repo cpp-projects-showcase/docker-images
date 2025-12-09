@@ -53,8 +53,7 @@ jobs:
         # managed in a dedicated pipeline
         # As of end 2025, Rocky Linux has no 10 generic tag, but only specific
         # 10.x tags: https://hub.docker.com/r/rockylinux/rockylinux
-        # os_img: [rocky9, rocky10]
-        os_img: [rocky9]
+        os_img: [rocky9, rocky10]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub
