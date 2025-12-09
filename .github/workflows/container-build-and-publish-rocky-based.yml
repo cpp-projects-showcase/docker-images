@@ -51,7 +51,10 @@ jobs:
       matrix:
         # List of base OSes, based on RPM packages. Fedora-based builds are
         # managed in a dedicated pipeline
-        os_img: [rocky9, rocky10]
+        # As of end 2025, Rocky Linux has no 10 generic tag, but only specific
+        # 10.x tags: https://hub.docker.com/r/rockylinux/rockylinux
+        # os_img: [rocky9, rocky10]
+        os_img: [rocky9]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub

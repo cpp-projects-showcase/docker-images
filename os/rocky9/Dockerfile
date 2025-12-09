@@ -3,7 +3,7 @@
 # Usual Docker tag: infrahelpers/cpppython:rocky9
 # Docker Hub/Cloud page: https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #
-# Universal Base Image (UBI):
+# Base Image (UBI):
 # * Hub/cloud:
 #   + Home page on Docker Hub: https://hub.docker.com/_/rockylinux
 #   + '9' on Docker Hub: https://hub.docker.com/r/rockylinux/rockylinux

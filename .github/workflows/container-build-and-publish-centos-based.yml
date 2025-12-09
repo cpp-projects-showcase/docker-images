@@ -51,7 +51,9 @@ jobs:
       matrix:
         # List of base OSes, based on RPM packages. Fedora-based builds are
         # managed in a dedicated pipeline
-        os_img: [centos8, centos9, centos10]
+        # os_img: [centos8, centos9, centos10]
+        # As of end 2025, there is still an issue with GPG keys of CentOS 10
+        os_img: [centos8, centos9]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub

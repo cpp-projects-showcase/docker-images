@@ -1,4 +1,3 @@
-
 #
 # Dockerfile: https://github.com/cpp-projects-showcase/docker-images/tree/main/centos9
 # Usual Docker tag: infrahelpers/cpppython:centos9
