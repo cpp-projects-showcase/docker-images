@@ -120,11 +120,6 @@ RUN git pull
 WORKDIR $HOME
 
 ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
-# Python 3.11.14
-RUN pyenv install 3.11.14 && \
-    pyenv global 3.11.14 && \
-    pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.11.14"
 # Python 3.12.12
 RUN pyenv install 3.12.12 && \
     pyenv global 3.12.12 && \
