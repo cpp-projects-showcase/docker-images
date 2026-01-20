@@ -113,6 +113,9 @@ WORKDIR $HOME/.pyenv
 RUN git pull && hash -r
 WORKDIR $HOME
 
+# Work around to force a reset of the cache in building Docker
+RUN mkdir -p /tmp/TO_BE_REMOVED
+
 ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
 # Python 3.12.12
 RUN pyenv install 3.12.12 && \
