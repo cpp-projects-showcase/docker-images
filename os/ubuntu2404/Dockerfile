@@ -14,6 +14,8 @@ ENV HOME="/home/build"
 ENV LANGUAGE="en_US:en"
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL="$LANG"
+# SOCI (https://github.com/SOCI/soci)
+ENV DEF_SOCI_VER="4.1.2"
 
 # Update the system
 RUN echo "Europe/Paris" > /etc/timezone
@@ -73,14 +75,18 @@ RUN YQ_VER=$(curl -Ls https://api.github.com/repos/mikefarah/yq/releases/latest 
 
 # SOCI (https://github.com/SOCI/soci)
 RUN mkdir -p /opt/soci
-RUN SOCI_VER=$(curl -Ls https://api.github.com/repos/SOCI/soci/tags|jq -r '.[].name'|grep "^v"|sort -r|head -1|cut -d'v' -f2,2) && \
-	curl -Ls \
-         https://github.com/SOCI/soci/archive/refs/tags/v${SOCI_VER}.tar.gz \
-         -o /opt/soci/soci-${SOCI_VER}.tar.gz && cd /opt/soci && \
-    tar zxf soci-${SOCI_VER}.tar.gz && rm -f soci-${SOCI_VER}.tar.gz && \
-    cd soci-${SOCI_VER} && mkdir -p build && cd build && \
-    cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
-          -DSOCI_TESTS=OFF .. && \
+RUN SOCI_JSON=$(curl -Ls https://api.github.com/repos/SOCI/soci/tags) && \
+    SOCI_VER=$(echo "$SOCI_JSON" | jq -e -r '.[].name' | grep "^v" | sort -r | head -1 | cut -d'v' -f2,2) && \
+    if [ -z "${SOCI_VER}" ]; then \
+      echo "Warning: Could not determine SOCI version from GitHub, using default one (${DEF_SOCI_VER})"; \
+      SOCI_VER="${DEF_SOCI_VER}"; \
+    fi && \
+	curl -Ls "https://github.com/SOCI/soci/archive/refs/tags/v${SOCI_VER}.tar.gz" \
+	  -o /opt/soci/soci-${SOCI_VER}.tar.gz && cd /opt/soci && \
+	tar zxf soci-${SOCI_VER}.tar.gz && rm -f soci-${SOCI_VER}.tar.gz && \
+	cd soci-${SOCI_VER} && mkdir -p build && cd build && \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
+	  -DSOCI_TESTS=OFF .. && \
     make install
 
 # Create the `build` user (for the development activities)
