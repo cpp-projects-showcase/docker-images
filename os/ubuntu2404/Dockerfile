@@ -8,12 +8,22 @@ FROM docker.io/ubuntu:24.04
 LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.1"
 
+# https://docs.docker.com/reference/dockerfile/#understand-how-arg-and-from-interact
+## https://www.python.org/downloads/source/
+ARG PY312_VERSION="3.12.13"
+ARG PY313_VERSION="3.13.13"
+ARG PY314_VERSION="3.14.4"
+
 # Environment
 ENV container="docker"
 ENV HOME="/home/build"
 ENV LANGUAGE="en_US:en"
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL="$LANG"
+# Python
+ENV PY312_VERSION="$PY312_VERSION"
+ENV PY313_VERSION="$PY313_VERSION"
+ENV PY314_VERSION="$PY314_VERSION"
 # SOCI (https://github.com/SOCI/soci)
 ENV DEF_SOCI_VER="4.1.2"
 
@@ -23,7 +33,7 @@ RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90-yes
 RUN apt-get -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
 	apt-utils apt-transport-https \
-	ca-certificates locales tzdata sudo \
+	ca-certificates gpg locales tzdata sudo \
 	zip unzip gzip bzip2 xz-utils tar unrar p7zip-full \
 	curl wget ncat net-tools bind9-host aptitude
 
@@ -120,17 +130,16 @@ RUN git pull
 WORKDIR $HOME
 
 ENV PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
-# Python 3.12.12
-RUN pyenv install 3.12.12 && \
-    pyenv global 3.12.12 && \
+# Python 3.12
+RUN pyenv install $PY312_VERSION && \
+    pyenv global $PY312_VERSION && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.12.12"
-# Python 3.13.12
-RUN pyenv install 3.13.12 && \
-    pyenv global 3.13.12 && \
+RUN pyenv global system || echo "No default system version of Python. Sticking to $PY312_VERSION"
+# Python 3.13
+RUN pyenv install $PY313_VERSION && \
+    pyenv global $PY313_VERSION && \
     pip install -U pip
-RUN pyenv global system || echo "No default system version of Python. Sticking to 3.13.12"
+RUN pyenv global system || echo "No default system version of Python. Sticking to $PY313_VERSION"
 
 # Entry point
 CMD ["/bin/bash"]
-
