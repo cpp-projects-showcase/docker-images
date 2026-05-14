@@ -14,7 +14,7 @@ EXTRACT_DATE := $(TODAY_DATE)
 # Python - https://www.python.org/downloads/source/
 PY312_VERSION := 3.12.13
 PY313_VERSION := 3.13.13
-PY314_VERSION := 3.14.4
+PY314_VERSION := 3.14.5
 
 # OS types
 BASE_OS_PATHS := $(wildcard os/*)

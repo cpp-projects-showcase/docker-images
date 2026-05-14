@@ -50,7 +50,7 @@ jobs:
     strategy:
       matrix:
         # List of base OSes, based on Ubuntu packages
-        os_img: [ubuntu2004, ubuntu2204, ubuntu2404]
+        os_img: [ubuntu2204, ubuntu2404, ubuntu2604]
 
     # https://github.com/cpp-projects-showcase/docker-images/settings/environments/4430897264/edit
     environment: docker-hub
