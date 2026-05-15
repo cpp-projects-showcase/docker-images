@@ -12,7 +12,7 @@ LABEL version="0.1"
 ## https://www.python.org/downloads/source/
 ARG PY312_VERSION="3.12.13"
 ARG PY313_VERSION="3.13.13"
-ARG PY314_VERSION="3.14.4"
+ARG PY314_VERSION="3.14.5"
 
 # Environment
 ENV container="docker"
