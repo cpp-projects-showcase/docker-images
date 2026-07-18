@@ -11,8 +11,8 @@ LABEL version="0.1"
 # https://docs.docker.com/reference/dockerfile/#understand-how-arg-and-from-interact
 ## https://www.python.org/downloads/source/
 ARG PY312_VERSION="3.12.13"
-ARG PY313_VERSION="3.13.13"
-ARG PY314_VERSION="3.14.5"
+ARG PY313_VERSION="3.13.14"
+ARG PY314_VERSION="3.14.6"
 
 # Environment
 ENV container="docker"
@@ -25,7 +25,7 @@ ENV PY312_VERSION="$PY312_VERSION"
 ENV PY313_VERSION="$PY313_VERSION"
 ENV PY314_VERSION="$PY314_VERSION"
 # SOCI (https://github.com/SOCI/soci)
-ENV DEF_SOCI_VER="4.1.2"
+ENV DEF_SOCI_VER="4.1.4"
 
 # Update the system
 RUN echo "Europe/Paris" > /etc/timezone
@@ -53,7 +53,7 @@ RUN apt-get -qq update && \
 	lsb-release libgmp-dev \
 	gcc g++ cppcheck clang cmake manpages patch pkg-config \
 	m4 autoconf automake libtool libltdl-dev build-essential \
-	flex bison \
+	flex bison libfmt-dev \
 	libboost-all-dev libxapian-dev \
 	libreadline-dev libncurses5-dev \
 	libczmq4 libczmq-dev libssl-dev libffi-dev \
